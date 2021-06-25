@@ -2,11 +2,16 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Json Test",
-    "version": "1.0"
+    "version": "1.0",
+    "description": "This is the json descriptiono"
   },
   "servers": [
     {
       "url": "http://localhost:3000"
+    },
+    {
+      "url": "https://dev.stoplight.io",
+      "description": "dev/"
     }
   ],
   "paths": {
@@ -270,6 +275,14 @@
           "email",
           "emailVerified"
         ]
+      }
+    },
+    "securitySchemes": {
+      "access_token": {
+        "name": "1123",
+        "type": "apiKey",
+        "in": "header",
+        "description": "Access Token  "
       }
     }
   }
