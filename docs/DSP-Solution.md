@@ -5,7 +5,7 @@ The beginning of an awesome article...
 
 This is the solution for DSP
 
-[GetLonelyUser](reference/Test.yaml/paths/~1users~1lonely~1{userId})
+[GetLonelyUser](../reference/Test.yaml/paths/~1users~1lonely~1{userId}/patch)
 
 Why does this not get updated?
 
