@@ -1,6 +1,6 @@
 openapi: 3.1.0
 info:
-  contact: choongyong@yojee.com 
+  contact: choongyong@yojee.com
   description: first attempt
   title: Test
   version: '1.0'
@@ -190,3 +190,12 @@ components:
         - lastName
         - email
         - emailVerified
+  responses:
+    Success:
+      description: Example response
+      content:
+        application/json:
+          schema:
+            properties:
+              id:
+                type: string
