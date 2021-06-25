@@ -49,6 +49,17 @@
                       "emailVerified": true,
                       "signUpDate": "2019-08-24"
                     }
+                  },
+                  "example-2": {
+                    "value": {
+                      "id": 142,
+                      "firstName": "Alice",
+                      "lastName": "Smith",
+                      "email": "alice.smith@gmail.com",
+                      "dateOfBirth": "1997-10-31",
+                      "emailVerified": true,
+                      "signUpDate": "2019-08-24"
+                    }
                   }
                 }
               }
@@ -138,6 +149,97 @@
             }
           },
           "description": "Patch user properties to update."
+        }
+      },
+      "post": {
+        "summary": "",
+        "operationId": "post-users-userId",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {}
+                },
+                "examples": {
+                  "successfully created with no idea": {
+                    "value": {}
+                  },
+                  "successfully created with idea": {
+                    "value": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "number"
+                  },
+                  "idea": {
+                    "type": [
+                      "string",
+                      "array"
+                    ],
+                    "description": "Use this when need to show idea  ",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "type": {
+                          "type": "string",
+                          "enum": [
+                            "good",
+                            "bad"
+                          ]
+                        },
+                        "actual_idea": {
+                          "type": "string"
+                        }
+                      }
+                    },
+                    "readOnly": true
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "name of the user"
+                  }
+                },
+                "required": [
+                  "id",
+                  "name"
+                ]
+              },
+              "examples": {
+                "with no idea": {
+                  "value": {
+                    "id": 1234,
+                    "name": "Yesterday once more"
+                  }
+                },
+                "with idea": {
+                  "value": {
+                    "id": 1234,
+                    "idea": [
+                      {
+                        "type": "good",
+                        "actual_idea": "go for tea"
+                      }
+                    ],
+                    "name": "Today once more"
+                  }
+                }
+              }
+            }
+          },
+          "description": ""
         }
       }
     },
