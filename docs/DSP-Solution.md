@@ -5,6 +5,8 @@ The beginning of an awesome article...
 
 This is the solution for DSP
 
+[GetLonelyUser](reference/Test.yaml/paths/~1users~1lonely~1{userId})
+
 ```json json_schema
 {
   "type": "object",
@@ -22,4 +24,3 @@ This is the solution for DSP
 }
 ```
 
-[](url)
