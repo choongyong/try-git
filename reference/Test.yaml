@@ -160,6 +160,18 @@ paths:
       tags: []
       responses: {}
       operationId: get-dispatcher-sender-orders
+      x-internal: false
+      description: Use this to get sender orders
+      parameters:
+        - schema:
+            type: string
+          in: cookie
+        - schema:
+            type: string
+          in: query
+        - schema:
+            type: string
+          in: header
 components:
   schemas:
     User:
@@ -211,3 +223,10 @@ components:
             properties:
               id:
                 type: string
+  securitySchemes:
+    API Key - 1:
+      name: API Key
+      type: apiKey
+      in: query
+security:
+  - API Key - 1: []

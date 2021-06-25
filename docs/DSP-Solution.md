@@ -7,6 +7,8 @@ This is the solution for DSP
 
 [GetLonelyUser](reference/Test.yaml/paths/~1users~1lonely~1{userId})
 
+Why does this not get updated?
+
 ```json json_schema
 {
   "type": "object",
@@ -24,3 +26,4 @@ This is the solution for DSP
 }
 ```
 
+I am puzzled
