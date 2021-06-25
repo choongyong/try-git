@@ -81,6 +81,14 @@
       "description": "Dispatcher APIs for Corporate Sender Management"
     },
     {
+      "name": "[Dispatcher] Webhooks",
+      "description": "Manage Webhooks"
+    },
+    {
+      "name": "[Dispatcher] Webhook",
+      "description": "Manage Webhook"
+    },
+    {
       "name": "[Dispatcher] Worker",
       "description": "Dispatcher APIs for Worker Management"
     },
@@ -3595,14 +3603,14 @@
         ],
         "summary": "This endpoint obtains a list of possible slots for an Item",
         "responses": {
-          "400": {
-            "description": {}
-          },
           "200": {
             "schema": {
               "$ref": "#/definitions/GetSlotsResponse"
             },
             "description": "Get slots Response"
+          },
+          "400": {
+            "description": {}
           }
         },
         "produces": [
@@ -4070,7 +4078,7 @@
         "tags": [
           "[Dispatcher] Webhook"
         ],
-        "summary": "This endpoint deletes a webhook",
+        "summary": "Webhook",
         "responses": {
           "200": {
             "description": "Webhook was deleted."
@@ -4100,8 +4108,16 @@
           }
         ],
         "operationId": "ApiWeb.V3.Dispatcher.WebhookController.delete",
-        "description": ""
-      }
+        "description": "Manage a single webhook"
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ]
     },
     "/api/v3/public/payments/stripe/plans": {
       "get": {
@@ -4162,13 +4178,13 @@
         ],
         "summary": "This endpoint generates an Invoice from an Order number",
         "responses": {
+          "200": {
+            "description": "Create invoice binary for download"
+          },
           "422": {
             "description": {
               "message": "Invoice creation failed!"
             }
-          },
-          "200": {
-            "description": "Create invoice binary for download"
           }
         },
         "parameters": [
@@ -4404,7 +4420,7 @@
         "tags": [
           "[Dispatcher] Webhook"
         ],
-        "summary": "This endpoint creates a new Webhook",
+        "summary": "Webhooks",
         "responses": {
           "200": {
             "schema": {
@@ -4445,13 +4461,37 @@
         "tags": [
           "[Dispatcher] Webhook"
         ],
-        "summary": "This endpoint retrieves a list of webhooks",
+        "summary": "Webhooks",
         "responses": {
           "200": {
             "schema": {
               "$ref": "#/definitions/DispatcherWebhooksResponse"
             },
-            "description": "OK"
+            "description": "OK",
+            "examples": {
+              "example-1": {
+                "pagination": {
+                  "total_pages": 2,
+                  "total_count": 1,
+                  "limit_value": 1,
+                  "current_page": 1
+                },
+                "data": [
+                  {
+                    "url": "https://cuong.free.beeceptor.com",
+                    "updated_at": "2018-10-23T07:57:27.538169Z",
+                    "status": "active",
+                    "secret_token": "AA-BB-CC",
+                    "inserted_at": "2018-10-23T07:57:27.538169Z",
+                    "events": [
+                      "sender.created",
+                      "payment.completed"
+                    ],
+                    "company_id": 1
+                  }
+                ]
+              }
+            }
           }
         },
         "parameters": [
@@ -4487,8 +4527,9 @@
           }
         ],
         "operationId": "ApiWeb.V3.Dispatcher.WebhookController.index",
-        "description": ""
-      }
+        "description": "This endpoint retrieves a list of webhooks"
+      },
+      "parameters": []
     },
     "/api/v3/dispatcher/users": {
       "post": {
@@ -5062,11 +5103,11 @@
         ],
         "summary": "This endpoint creates a payment request",
         "responses": {
-          "422": {
-            "description": "Payment failed!"
-          },
           "200": {
             "description": "Payment successful"
+          },
+          "422": {
+            "description": "Payment failed!"
           }
         },
         "parameters": [
@@ -5607,16 +5648,16 @@
         ],
         "summary": "This endpoint creates an Order",
         "responses": {
-          "422": {
-            "description": {
-              "message": "Order creation failed!"
-            }
-          },
           "200": {
             "schema": {
               "$ref": "#/definitions/SenderCreateOrderResponse"
             },
             "description": "Create order response success"
+          },
+          "422": {
+            "description": {
+              "message": "Order creation failed!"
+            }
           }
         },
         "parameters": [
@@ -5902,17 +5943,17 @@
         ],
         "summary": "This endpoint creates many Workers",
         "responses": {
-          "422": {
-            "schema": {
-              "$ref": "#/definitions/DispatcherCreateMultipleWorkersErrorResponse"
-            },
-            "description": "Error"
-          },
           "200": {
             "schema": {
               "$ref": "#/definitions/DispatcherCreateMultipleWorkersResponse"
             },
             "description": "OK"
+          },
+          "422": {
+            "schema": {
+              "$ref": "#/definitions/DispatcherCreateMultipleWorkersErrorResponse"
+            },
+            "description": "Error"
           }
         },
         "parameters": [
@@ -6927,13 +6968,13 @@
         ],
         "summary": "This endpoint generates a Label from a tracking number",
         "responses": {
+          "200": {
+            "description": "Label to be downloaded."
+          },
           "422": {
             "description": {
               "message": "Label creation failed!"
             }
-          },
-          "200": {
-            "description": "Label to be downloaded."
           }
         },
         "parameters": [
@@ -7697,14 +7738,14 @@
         ],
         "summary": "Validate if reset password token is still valid",
         "responses": {
-          "422": {
-            "description": {
-              "message": "Invalid token!"
-            }
-          },
           "200": {
             "description": {
               "message": "ok"
+            }
+          },
+          "422": {
+            "description": {
+              "message": "Invalid token!"
             }
           }
         },
@@ -8341,13 +8382,13 @@
         ],
         "summary": "This endpoint generates a Pod from an Order number",
         "responses": {
+          "200": {
+            "description": "Pod to be downloaded."
+          },
           "422": {
             "description": {
               "message": "Pod creation failed!"
             }
-          },
-          "200": {
-            "description": "Pod to be downloaded."
           }
         },
         "parameters": [
@@ -9498,13 +9539,13 @@
         ],
         "summary": "This endpoint generates a Pod from a tracking number",
         "responses": {
+          "200": {
+            "description": "Pod to be downloaded."
+          },
           "422": {
             "description": {
               "message": "Pod creation failed!"
             }
-          },
-          "200": {
-            "description": "Pod to be downloaded."
           }
         },
         "parameters": [
@@ -9542,13 +9583,13 @@
         ],
         "summary": "This endpoint generates a Label from an Order number",
         "responses": {
+          "200": {
+            "description": "Label to be downloaded."
+          },
           "422": {
             "description": {
               "message": "Label creation failed!"
             }
-          },
-          "200": {
-            "description": "Label to be downloaded."
           }
         },
         "parameters": [
@@ -9796,17 +9837,17 @@
         ],
         "summary": "This endpoint creates many Dispatchers",
         "responses": {
-          "422": {
-            "schema": {
-              "$ref": "#/definitions/DispatcherCreateMultipleUsersErrorResponse"
-            },
-            "description": "Error"
-          },
           "200": {
             "schema": {
               "$ref": "#/definitions/DispatcherCreateMultipleUsersResponse"
             },
             "description": "OK"
+          },
+          "422": {
+            "schema": {
+              "$ref": "#/definitions/DispatcherCreateMultipleUsersErrorResponse"
+            },
+            "description": "Error"
           }
         },
         "parameters": [
@@ -10183,17 +10224,17 @@
         ],
         "summary": "This endpoint creates many Senders",
         "responses": {
-          "422": {
-            "schema": {
-              "$ref": "#/definitions/DispatcherCreateMultipleSendersErrorResponse"
-            },
-            "description": "Error"
-          },
           "200": {
             "schema": {
               "$ref": "#/definitions/DispatcherCreateMultipleSendersResponse"
             },
             "description": "OK"
+          },
+          "422": {
+            "schema": {
+              "$ref": "#/definitions/DispatcherCreateMultipleSendersErrorResponse"
+            },
+            "description": "Error"
           }
         },
         "parameters": [
@@ -10646,14 +10687,14 @@
         ],
         "summary": "This endpoint obtains a price quote for an Order",
         "responses": {
-          "500": {
-            "description": {}
-          },
           "200": {
             "schema": {
               "$ref": "#/definitions/GetPricesResponse"
             },
             "description": "Get Prices Response"
+          },
+          "500": {
+            "description": {}
           }
         },
         "produces": [
@@ -10715,13 +10756,13 @@
         ],
         "summary": "This endpoint generates a Manifest for a Worker",
         "responses": {
+          "200": {
+            "description": "Worker manifest to be downloaded."
+          },
           "422": {
             "description": {
               "message": "Worker manifest creation failed!"
             }
-          },
-          "200": {
-            "description": "Worker manifest to be downloaded."
           }
         },
         "parameters": [
@@ -13321,16 +13362,16 @@
         ],
         "summary": "This endpoint creates an Order",
         "responses": {
-          "422": {
-            "description": {
-              "message": "Order creation failed!"
-            }
-          },
           "200": {
             "schema": {
               "$ref": "#/definitions/DispatcherCreateOrderResponse"
             },
             "description": "Create order response success"
+          },
+          "422": {
+            "description": {
+              "message": "Order creation failed!"
+            }
           }
         },
         "parameters": [
@@ -13570,10 +13611,10 @@
         ],
         "summary": "This endpoint retrieves information about an Order",
         "responses": {
-          "500": {
+          "200": {
             "description": {}
           },
-          "200": {
+          "500": {
             "description": {}
           }
         },
@@ -15784,16 +15825,16 @@
         ],
         "summary": "This endpoint creates an Order with multi-leg support",
         "responses": {
-          "422": {
-            "description": {
-              "message": "Order creation failed!"
-            }
-          },
           "200": {
             "schema": {
               "$ref": "#/definitions/DispatcherCreateOrderResponse"
             },
             "description": "Create order response success"
+          },
+          "422": {
+            "description": {
+              "message": "Order creation failed!"
+            }
           }
         },
         "parameters": [
@@ -16169,14 +16210,14 @@
         ],
         "summary": "This endpoint obtains a price quote for an multi-item Order",
         "responses": {
-          "500": {
-            "description": {}
-          },
           "200": {
             "schema": {
               "$ref": "#/definitions/GetOrderPricesResponse"
             },
             "description": "Get Prices Response"
+          },
+          "500": {
+            "description": {}
           }
         },
         "produces": [
@@ -16826,14 +16867,14 @@
         ],
         "summary": "Validate if reset password token is still valid",
         "responses": {
-          "422": {
-            "description": {
-              "message": "Reset password token is expired, please try again!"
-            }
-          },
           "200": {
             "description": {
               "message": "Password is updated!"
+            }
+          },
+          "422": {
+            "description": {
+              "message": "Reset password token is expired, please try again!"
             }
           }
         },
@@ -16862,14 +16903,14 @@
         ],
         "summary": "Create reset password token and send email",
         "responses": {
-          "422": {
-            "description": {
-              "message": "Email not found!!"
-            }
-          },
           "200": {
             "description": {
               "message": "An email has been sent to [email] with further instructions."
+            }
+          },
+          "422": {
+            "description": {
+              "message": "Email not found!!"
             }
           }
         },
@@ -16905,14 +16946,14 @@
         ],
         "summary": "Validate if reset password token is still valid",
         "responses": {
-          "422": {
-            "description": {
-              "message": "Reset password token is expired, please try again!"
-            }
-          },
           "200": {
             "description": {
               "message": "Password is updated!"
+            }
+          },
+          "422": {
+            "description": {
+              "message": "Reset password token is expired, please try again!"
             }
           }
         },
@@ -17396,13 +17437,13 @@
         ],
         "summary": "This endpoint generates a Label from a tracking number",
         "responses": {
+          "200": {
+            "description": "Label to be downloaded."
+          },
           "422": {
             "description": {
               "message": "Label creation failed!"
             }
-          },
-          "200": {
-            "description": "Label to be downloaded."
           }
         },
         "parameters": [
@@ -20313,16 +20354,16 @@
         "placed_by_user_profile_id": "1741",
         "items": [
           {
-            "width": 1.0,
-            "weight": 1.0,
-            "volumetric_weight": 1.0,
-            "volume": 1.0,
+            "width": 1,
+            "weight": 1,
+            "volumetric_weight": 1,
+            "volume": 1,
             "service_type_id": 300,
             "service_type": "custom",
             "quantity": 1,
             "payload_type": "document",
-            "length": 1.0,
-            "height": 1.0,
+            "length": 1,
+            "height": 1,
             "external_customer_id3": "TEST MULTILEG2",
             "external_customer_id2": "TEST MULTILEG2",
             "external_customer_id": "TEST MULTILEG2"
@@ -21322,12 +21363,12 @@
             "lng": 103.90331700000002,
             "lat": 1.329095,
             "item": {
-              "width": 29.0,
-              "weight": 5.0,
-              "volumetric_weight": 121945.0,
-              "volume": 200.0,
-              "length": 29.0,
-              "height": 29.0,
+              "width": 29,
+              "weight": 5,
+              "volumetric_weight": 121945,
+              "volume": 200,
+              "length": 29,
+              "height": 29,
               "global_tracking_number": "Y-MEJZPQ"
             },
             "id": 1,
@@ -22134,35 +22175,109 @@
       }
     },
     "DispatcherWebhooksResponse": {
+      "description": "Response for Webhook",
       "type": "object",
-      "title": "Webhooks Response",
-      "properties": {
-        "data": {
-          "type": "array"
+      "x-examples": {
+        "example-1": {
+          "pagination": {
+            "total_pages": 2,
+            "total_count": 1,
+            "limit_value": 1,
+            "current_page": 1
+          },
+          "data": [
+            {
+              "url": "https://cuong.free.beeceptor.com",
+              "updated_at": "2018-10-23T07:57:27.538169Z",
+              "status": "active",
+              "secret_token": "AA-BB-CC",
+              "inserted_at": "2018-10-23T07:57:27.538169Z",
+              "events": [
+                "sender.created",
+                "payment.completed"
+              ],
+              "company_id": 1
+            }
+          ]
         }
       },
-      "example": {
-        "pagination": {
-          "total_pages": 2,
-          "total_count": 1,
-          "limit_value": 1,
-          "current_page": 1
-        },
-        "data": [
-          {
-            "url": "https://cuong.free.beeceptor.com",
-            "updated_at": "2018-10-23T07:57:27.538169Z",
-            "status": "active",
-            "secret_token": "AA-BB-CC",
-            "inserted_at": "2018-10-23T07:57:27.538169Z",
-            "events": [
-              "sender.created",
-              "payment.completed"
-            ],
-            "company_id": 1
+      "properties": {
+        "data": {
+          "type": "array",
+          "uniqueItems": true,
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "properties": {
+              "url": {
+                "type": "string",
+                "minLength": 1
+              },
+              "updated_at": {
+                "type": "string",
+                "minLength": 1
+              },
+              "status": {
+                "type": "string",
+                "minLength": 1
+              },
+              "secret_token": {
+                "type": "string",
+                "minLength": 1
+              },
+              "inserted_at": {
+                "type": "string",
+                "minLength": 1
+              },
+              "events": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "company_id": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "url",
+              "updated_at",
+              "status",
+              "secret_token",
+              "inserted_at",
+              "company_id"
+            ]
           }
-        ]
-      }
+        },
+        "pagination": {
+          "type": "object",
+          "required": [
+            "total_pages",
+            "total_count",
+            "limit_value",
+            "current_page"
+          ],
+          "properties": {
+            "total_pages": {
+              "type": "number"
+            },
+            "total_count": {
+              "type": "number"
+            },
+            "limit_value": {
+              "type": "number"
+            },
+            "current_page": {
+              "type": "number"
+            }
+          }
+        }
+      },
+      "required": [
+        "data",
+        "pagination"
+      ],
+      "title": "DispatcherWebhookResponse"
     },
     "CompanyThemeResponse": {
       "type": "object",
@@ -22220,8 +22335,8 @@
           "speed": 100,
           "plate_number": "X123456",
           "model": "Everest",
-          "max_load_space_volume": 900.0,
-          "max_carry_weight": 600.0,
+          "max_load_space_volume": 900,
+          "max_carry_weight": 600,
           "is_active": true,
           "id": 8,
           "external_id": "1",
@@ -22707,7 +22822,7 @@
                 "calculation_type": "flat",
                 "base": {
                   "currency": "SGD",
-                  "amount": 2.0
+                  "amount": 2
                 }
               },
               {
@@ -22947,11 +23062,11 @@
                 "parent_rate_calculation_index": 0,
                 "min": {
                   "currency": "SGD",
-                  "amount": 2.0
+                  "amount": 2
                 },
                 "max": {
                   "currency": "SGD",
-                  "amount": 20.0
+                  "amount": 20
                 },
                 "description": "Main Charge",
                 "currency": "SGD",
@@ -23297,14 +23412,6 @@
               151
             ],
             "params": {
-              "315": {
-                "location": {
-                  "lng": 122.6428429677108,
-                  "lat": 65.67691234535297
-                },
-                "completion_time": "2018-03-10T03:37:08Z",
-                "comment": "this is a comment for complete a task"
-              },
               "151": {
                 "location": {
                   "lng": 122.6428429677108,
@@ -23312,6 +23419,14 @@
                 },
                 "completion_time": "2018-03-10T03:37:08Z",
                 "comment": "Second task comment"
+              },
+              "315": {
+                "location": {
+                  "lng": 122.6428429677108,
+                  "lat": 65.67691234535297
+                },
+                "completion_time": "2018-03-10T03:37:08Z",
+                "comment": "this is a comment for complete a task"
               }
             },
             "id": "random_hash"
@@ -23323,14 +23438,6 @@
               152
             ],
             "params": {
-              "316": {
-                "location": {
-                  "lng": 122.6428429677108,
-                  "lat": 65.67691234535297
-                },
-                "completion_time": "2018-03-11T03:37:08Z",
-                "comment": "this is a comment for complete a task"
-              },
               "152": {
                 "location": {
                   "lng": 122.6428429677108,
@@ -23338,6 +23445,14 @@
                 },
                 "completion_time": "2018-03-11T03:37:08Z",
                 "comment": "Second task comment"
+              },
+              "316": {
+                "location": {
+                  "lng": 122.6428429677108,
+                  "lat": 65.67691234535297
+                },
+                "completion_time": "2018-03-11T03:37:08Z",
+                "comment": "this is a comment for complete a task"
               }
             },
             "id": "random_hash_2"
@@ -23430,12 +23545,12 @@
             "lng": 103.7647132,
             "lat": 1.4630478,
             "item": {
-              "width": 1.0,
-              "weight": 1.0,
-              "volumetric_weight": 10.0,
-              "volume": 200.0,
-              "length": 1.0,
-              "height": 1.0,
+              "width": 1,
+              "weight": 1,
+              "volumetric_weight": 10,
+              "volume": 200,
+              "length": 1,
+              "height": 1,
               "global_tracking_number": "Y-QVK4PQ"
             },
             "id": 85945,
@@ -24442,16 +24557,16 @@
         }
       },
       "example": {
-        "width": 1.0,
-        "weight": 1.0,
+        "width": 1,
+        "weight": 1,
         "service_type": "same_day",
         "quantity": 5,
         "price_currency": "SGD",
         "price_amount": "10.00",
         "payload_type": "Updated document",
-        "length": 1.0,
+        "length": 1,
         "info": "info_test",
-        "height": 1.0,
+        "height": 1,
         "external_customer_id3": "changed_external_customer_id3",
         "external_customer_id2": "changed_external_customer_id2",
         "external_customer_id": "changed_external_customer_id",
@@ -24693,18 +24808,18 @@
         "price_amount": 10,
         "items": [
           {
-            "width": 1.0,
-            "weight": 1.0,
-            "volumetric_weight": 10.0,
-            "volume": 200.0,
+            "width": 1,
+            "weight": 1,
+            "volumetric_weight": 10,
+            "volume": 200,
             "service_type": "same_day",
             "quantity": 2,
             "price_info": "Surcharge 2.00",
             "price_amount": "10.00",
             "payload_type": "Package",
-            "length": 1.0,
+            "length": 1,
             "info": "info_test",
-            "height": 1.0,
+            "height": 1,
             "external_customer_id3": "external_customer_id3_test",
             "external_customer_id2": "external_customer_id2_test",
             "external_customer_id": "external_customer_id_test",
@@ -26884,14 +26999,14 @@
               "status": "assigned",
               "service_type": "next_day",
               "item": {
-                "width": 53.0,
-                "weight": 4.0,
-                "volumetric_weight": 595508.0,
-                "volume": 200.0,
+                "width": 53,
+                "weight": 4,
+                "volumetric_weight": 595508,
+                "volume": 200,
                 "tracking_number": "Y-CTBVPQ",
                 "payload_type": "Package",
-                "length": 53.0,
-                "height": 53.0,
+                "length": 53,
+                "height": 53,
                 "description": ""
               },
               "inserted_at": "2018-03-08T08:45:38.632070"
@@ -26972,12 +27087,12 @@
             "lng": 106.6913373,
             "lat": 10.785092,
             "item": {
-              "width": 1.0,
-              "weight": 1.0,
-              "volumetric_weight": 10.0,
-              "volume": 200.0,
-              "length": 1.0,
-              "height": 1.0,
+              "width": 1,
+              "weight": 1,
+              "volumetric_weight": 10,
+              "volume": 200,
+              "length": 1,
+              "height": 1,
               "global_tracking_number": "YOJ-UUXOUKPNPT0"
             },
             "id": 551,
@@ -27344,7 +27459,7 @@
             "description": "1 Users × Yojee Blitz (at $20.00 / month)",
             "currency": "sgd",
             "created_at": "2020-01-29T08:11:07Z",
-            "amount": 20.0
+            "amount": 20
           }
         ]
       },
@@ -28124,7 +28239,7 @@
             "calculation_type": "flat",
             "base": {
               "currency": "SGD",
-              "amount": 2.0
+              "amount": 2
             }
           },
           {
@@ -28364,11 +28479,11 @@
             "parent_rate_calculation_index": 0,
             "min": {
               "currency": "SGD",
-              "amount": 2.0
+              "amount": 2
             },
             "max": {
               "currency": "SGD",
-              "amount": 20.0
+              "amount": 20
             },
             "description": "Main Charge",
             "currency": "SGD",
@@ -28583,12 +28698,12 @@
         "lng": 103.90331700000002,
         "lat": 1.329095,
         "item": {
-          "width": 29.0,
-          "weight": 5.0,
-          "volumetric_weight": 121945.0,
-          "volume": 200.0,
-          "length": 29.0,
-          "height": 29.0,
+          "width": 29,
+          "weight": 5,
+          "volumetric_weight": 121945,
+          "volume": 200,
+          "length": 29,
+          "height": 29,
           "global_tracking_number": "Y-MEJZPQ"
         },
         "id": 1,
@@ -29105,7 +29220,7 @@
               "calculation_type": "flat",
               "base": {
                 "currency": "SGD",
-                "amount": 2.0
+                "amount": 2
               }
             },
             {
@@ -29345,11 +29460,11 @@
               "parent_rate_calculation_index": 0,
               "min": {
                 "currency": "SGD",
-                "amount": 2.0
+                "amount": 2
               },
               "max": {
                 "currency": "SGD",
-                "amount": 20.0
+                "amount": 20
               },
               "description": "Main Charge",
               "currency": "SGD",
