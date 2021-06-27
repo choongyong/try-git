@@ -1,6 +1,14 @@
 {
   "tags": [
     {
+      "name": "[Dispatcher] Webhooks",
+      "description": "Manage Webhooks"
+    },
+    {
+      "name": "[Dispatcher] Webhook",
+      "description": "Manage Webhook"
+    },
+    {
       "name": "[Public]",
       "description": "Public APIs"
     },
@@ -79,14 +87,6 @@
     {
       "name": "[Dispatcher] CorporateSender",
       "description": "Dispatcher APIs for Corporate Sender Management"
-    },
-    {
-      "name": "[Dispatcher] Webhooks",
-      "description": "Manage Webhooks"
-    },
-    {
-      "name": "[Dispatcher] Webhook",
-      "description": "Manage Webhook"
     },
     {
       "name": "[Dispatcher] Worker",
