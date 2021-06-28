@@ -3,7 +3,11 @@
   "info": {
     "title": "Json Test",
     "version": "1.0",
-    "description": "This is the json descriptiono"
+    "description": "This is the json descriptiono",
+    "contact": {
+      "name": "KCY",
+      "email": "choongyong.koh@gmail.com"
+    }
   },
   "servers": [
     {
@@ -12,6 +16,12 @@
     {
       "url": "https://dev.stoplight.io",
       "description": "dev/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "User",
+      "description": "Calls for User"
     }
   ],
   "paths": {
@@ -73,7 +83,9 @@
         "description": "Retrieve the information of the user with the matching user ID."
       },
       "patch": {
+        "tags": ["User"],
         "summary": "Update User Information",
+        "description": "Update the information of an existing user.",
         "operationId": "patch-users-userId",
         "responses": {
           "200": {
@@ -106,7 +118,6 @@
             "description": "Email Already Taken"
           }
         },
-        "description": "Update the information of an existing user.",
         "requestBody": {
           "content": {
             "application/json": {
@@ -152,8 +163,10 @@
         }
       },
       "post": {
+        "tags": ["User"],
         "summary": "",
         "operationId": "post-users-userId",
+        "description": "add user",
         "responses": {
           "200": {
             "description": "OK",
@@ -245,6 +258,7 @@
     },
     "/user": {
       "post": {
+        "tags": ["User"],
         "summary": "Create New User",
         "operationId": "post-user",
         "responses": {
@@ -325,6 +339,44 @@
   },
   "components": {
     "schemas": {
+      "Address": {
+        "title": "Address",
+        "type": "object",
+        "description": "",
+        "examples": [
+          {
+            "id": 142,
+            "address1": "Alice",
+            "address2": "Smith",
+            "postalCode": "123456"
+          }
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "description": "Unique identifier for the given user."
+          },
+          "address1": {
+            "type": "string"
+          },
+          "address2": {
+            "type": "string"
+          },
+          "postalCode": {
+            "type": "string"
+          },
+          "createDate": {
+            "type": "string",
+            "format": "date",
+            "description": "The date that the addrsss was created."
+          }
+        },
+        "required": [
+          "id",
+          "address1",
+          "postalCode"
+        ]
+      },
       "User": {
         "title": "User",
         "type": "object",
@@ -354,6 +406,12 @@
           "email": {
             "type": "string",
             "format": "email"
+          },
+          "address": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Address"
+            }
           },
           "dateOfBirth": {
             "type": "string",
