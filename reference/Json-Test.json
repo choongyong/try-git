@@ -3,7 +3,7 @@
   "info": {
     "title": "Json Test",
     "version": "1.0",
-    "description": "This is the json dsescripton",
+    "description": "This is the json Descripton",
     "contact": {
       "name": "KCY",
       "email": "choongyong.koh@gmail.com"
@@ -39,7 +39,9 @@
       ],
       "get": {
         "summary": "Get User Info by User ID",
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "responses": {
           "200": {
             "description": "User Found",
@@ -83,7 +85,9 @@
         "description": "Retrieve the information of the user with the matching user ID."
       },
       "patch": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Update User Information",
         "description": "Update the information of an existing user.",
         "operationId": "patch-users-userId",
@@ -163,7 +167,9 @@
         }
       },
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "",
         "operationId": "post-users-userId",
         "description": "add user",
@@ -258,7 +264,9 @@
     },
     "/user": {
       "post": {
-        "tags": ["User"],
+        "tags": [
+          "User"
+        ],
         "summary": "Create New User",
         "operationId": "post-user",
         "responses": {
