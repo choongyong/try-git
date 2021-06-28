@@ -4024,12 +4024,48 @@
           },
           {
             "schema": {
-              "$ref": "#/definitions/DispatcherUpdateWebhookRequest"
+              "description": "",
+              "type": "object",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "events": {
+                  "type": "array",
+                  "items": {
+                    "required": [],
+                    "properties": {}
+                  }
+                }
+              },
+              "required": [
+                "url",
+                "events"
+              ],
+              "x-examples": {
+                "example-1": {
+                  "url": "https://cuong.free.beeceptor.com",
+                  "events": [
+                    "sender.created",
+                    "payment.completed"
+                  ]
+                }
+              }
             },
             "required": false,
             "name": "webhook",
             "in": "body",
-            "description": "Webhook information"
+            "description": "Webhook information",
+            "x-examples": {
+              "example-1": {
+                "url": "https://cuong.free.beeceptor.com",
+                "events": [
+                  "sender.created",
+                  "payment.completed"
+                ]
+              }
+            }
           }
         ],
         "operationId": "ApiWeb.V3.Dispatcher.WebhookController.update",
@@ -20287,7 +20323,11 @@
           "payment.completed"
         ],
         "company_id": 1
-      }
+      },
+      "description": "Webhook response",
+      "x-tags": [
+        "DWebhook"
+      ]
     },
     "DispatcherCreateOrderMultiLegRequest": {
       "type": "object",
