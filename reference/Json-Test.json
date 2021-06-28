@@ -3,7 +3,7 @@
   "info": {
     "title": "Json Test",
     "version": "1.0",
-    "description": "This is the json dsescripton",
+    "description": "This is the json Descripton",
     "contact": {
       "name": "KCY",
       "email": "choongyong.koh@gmail.com"
@@ -21,7 +21,7 @@
   "tags": [
     {
       "name": "User",
-      "description": "Call for User"
+      "description": "Calls for User"
     }
   ],
   "paths": {
