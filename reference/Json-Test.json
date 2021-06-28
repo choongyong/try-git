@@ -39,7 +39,7 @@
       ],
       "get": {
         "summary": "Get User Info by User ID",
-        "tags": [],
+        "tags": ["User"],
         "responses": {
           "200": {
             "description": "User Found",
