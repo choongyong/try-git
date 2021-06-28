@@ -148,30 +148,6 @@ paths:
                   dateOfBirth: '1996-08-24'
         description: Post the necessary fields for the API to create a new user.
       description: Create a new user.
-  /dispatcher/orders:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-dispatcher-orders
-  /dispatcher/sender/orders:
-    get:
-      summary: Your GET endpoint
-      tags: []
-      responses: {}
-      operationId: get-dispatcher-sender-orders
-      x-internal: false
-      description: Use this to get sender orders
-      parameters:
-        - schema:
-            type: string
-          in: cookie
-        - schema:
-            type: string
-          in: query
-        - schema:
-            type: string
-          in: header
 components:
   schemas:
     User:
