@@ -1,16 +1,17 @@
-openapi: 3.1.0
+openapi: 3.0.3
 info:
   title: Yojee APIs
   version: '3.0'
+  description: Yojee's main APIs
   license:
     name: Commercial
     url: 'https://www.yojee.com'
-  description: |
-    Yojee API documentation
 servers:
   - url: 'https://umbrella-dev.yojee.com'
   - url: 'https://umbrella-staging.yojee.com'
 tags:
+  - name: '[Sender] Order'
+    description: Sender Order APIs
   - name: '[Public]'
     description: Public APIs
   - name: '[Public] Docs'
@@ -27,8 +28,6 @@ tags:
     description: Sender APIs
   - name: '[Sender] Batch'
     description: Sender Batch APIs
-  - name: '[Sender] Order'
-    description: Sender Order APIs
   - name: '[Worker]'
     description: Worker APIs
   - name: '[Worker] Task'
@@ -114,6 +113,9 @@ paths:
             schema:
               $ref: '#/components/schemas/TripAssignRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: tasks
   '/api/v3/dispatcher/partners/{cip}/reject_invite':
     put:
@@ -168,6 +170,9 @@ paths:
           description: sender organisation slug - required for organisational sender
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/tasks:
     get:
       tags:
@@ -262,7 +267,9 @@ paths:
           example: true / false
         - name: show_incomplete_info_order_step
           in: query
-          description: show incomplete info order_step - absence means ignore `incomplete info` trait
+          description: >-
+            show incomplete info order_step - absence means ignore `incomplete
+            info` trait
           schema:
             type: boolean
           example: true / false
@@ -462,6 +469,9 @@ paths:
           schema:
             type: integer
             default: 10
+      responses:
+        '200':
+          description: OK
     post:
       tags:
         - '[Dispatcher] Task'
@@ -555,7 +565,9 @@ paths:
           example: true / false
         - name: show_incomplete_info_order_step
           in: query
-          description: show incomplete info order_step - absence means ignore `incomplete info` trait
+          description: >-
+            show incomplete info order_step - absence means ignore `incomplete
+            info` trait
           schema:
             type: boolean
           example: true / false
@@ -755,6 +767,9 @@ paths:
           schema:
             type: integer
             default: 10
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/worker_teams/{id}/add_workers':
     post:
       tags:
@@ -788,6 +803,9 @@ paths:
             schema:
               $ref: '#/components/schemas/DispatcherAddWorkersToTeamRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: worker_team
   /api/v3/public/users/info:
     get:
@@ -802,6 +820,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/search/sender:
     get:
       tags:
@@ -841,6 +862,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/public/verify_otp:
     get:
       tags:
@@ -1073,6 +1097,9 @@ paths:
         content:
           '*/*': {}
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: last_read_at
   /api/v3/dispatcher/address_items/upload:
     post:
@@ -1106,7 +1133,9 @@ paths:
                   format: binary
                 sender_id:
                   type: integer
-                  description: The id of the sender to create these addresses for. If not given all senders will have accesss to these addresses
+                  description: >-
+                    The id of the sender to create these addresses for. If not
+                    given all senders will have accesss to these addresses
                   format: int32
         required: true
       responses:
@@ -1121,7 +1150,8 @@ paths:
       tags:
         - '[Enterprise] User'
       summary: This endpoint removes an user from an enterprise
-      operationId: ApiWeb.V3.Enterprise.EnterpriseUserController.remove_user_from_enterprise
+      operationId: >-
+        ApiWeb.V3.Enterprise.EnterpriseUserController.remove_user_from_enterprise
       parameters:
         - name: ACCESS_TOKEN
           in: header
@@ -1191,6 +1221,9 @@ paths:
           required: true
           schema:
             type: boolean
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/partners/invites/sent:
     get:
       tags:
@@ -1547,7 +1580,9 @@ paths:
     get:
       tags:
         - '[Dispatcher] OrderItem'
-      summary: this endpoint is used by a Dispatcher to view the logs for a single order_item
+      summary: >-
+        this endpoint is used by a Dispatcher to view the logs for a single
+        order_item
       operationId: ApiWeb.V3.Dispatcher.OrderItemController.logs
       parameters:
         - name: ACCESS_TOKEN
@@ -1608,6 +1643,9 @@ paths:
             schema:
               $ref: '#/components/schemas/ScheduleRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: schedule
     delete:
       tags:
@@ -1634,6 +1672,9 @@ paths:
           schema:
             type: integer
           example: 1
+      responses:
+        '200':
+          description: OK
     patch:
       tags:
         - '[Dispatcher] Schedule'
@@ -1666,6 +1707,9 @@ paths:
             schema:
               $ref: '#/components/schemas/ScheduleRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: schedule
   '/api/v3/sender/orders/{number}/cancel':
     put:
@@ -1792,6 +1836,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/waybill_templates/{id}':
     get:
       tags:
@@ -1829,7 +1876,7 @@ paths:
       tags:
         - '[Dispatcher] Addressbook'
       summary: 'This endpoint lists address items of a company, supporting search'
-      operationId: ApiWeb.V3.Dispatcher.AddressItemController.index.search
+      operationId: ApiWeb.V3.Dispatcher.AddressItemController.index
       parameters:
         - name: ACCESS_TOKEN
           in: header
@@ -1897,6 +1944,9 @@ paths:
             type: string
             enum:
               - external_id
+      responses:
+        '200':
+          description: OK
   '/api/v3/worker/stops/{id}/tasks':
     get:
       tags:
@@ -1947,7 +1997,9 @@ paths:
     get:
       tags:
         - '[Dispatcher] Worker'
-      summary: This endpoint retrieves locations of the worker according to a time window
+      summary: >-
+        This endpoint retrieves locations of the worker according to a time
+        window
       operationId: ApiWeb.V3.Dispatcher.WorkerController.location_history
       parameters:
         - name: ACCESS_TOKEN
@@ -2100,7 +2152,9 @@ paths:
       parameters:
         - name: time_zone
           in: query
-          description: 'timezone, if not specified, it will use the timezone in the company setting'
+          description: >-
+            timezone, if not specified, it will use the timezone in the company
+            setting
           schema:
             type: string
           example: Singapore
@@ -2162,7 +2216,9 @@ paths:
     get:
       tags:
         - '[Worker]'
-      summary: This endpoint retrieves a list of all companies along with their theme info
+      summary: >-
+        This endpoint retrieves a list of all companies along with their theme
+        info
       operationId: ApiWeb.V3.Worker.InfoController.get_companies_theme
       parameters:
         - name: ACCESS_TOKEN
@@ -2217,6 +2273,9 @@ paths:
           schema:
             type: integer
             default: 10
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/waybill_templates:
     post:
       tags:
@@ -2277,6 +2336,9 @@ paths:
             schema:
               $ref: '#/components/schemas/EtaRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: tasks
   '/api/v3/dispatcher/service_types/{id}':
     put:
@@ -2312,7 +2374,7 @@ paths:
         required: false
       responses:
         '200':
-          description: Ok
+          description: OK
           content: {}
       x-codegen-request-body-name: service_type
     delete:
@@ -2376,7 +2438,7 @@ paths:
         required: false
       responses:
         '200':
-          description: Ok
+          description: OK
           content: {}
       x-codegen-request-body-name: service_type
   /api/v3/dispatcher/operations/apply:
@@ -2481,6 +2543,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/permissions:
     get:
       tags:
@@ -2664,6 +2729,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/public/orders/get_slots:
     get:
       tags:
@@ -2696,7 +2764,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetSlotsResponse'
         '400':
-          description: Error
+          description: ERROR
           content: {}
   '/api/v3/worker/tasks/batches/{id}/status':
     get:
@@ -3099,6 +3167,9 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkActionsRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: actions
   '/api/v3/public/invoices/{order_number}':
     get:
@@ -3123,7 +3194,7 @@ paths:
           description: Create invoice binary for download
           content: {}
         '422':
-          description: Error
+          description: ERROR
           content: {}
   '/api/v3/dispatcher/task_groups/{id}':
     get:
@@ -3150,11 +3221,16 @@ paths:
           required: true
           schema:
             type: integer
+      responses:
+        '200':
+          description: OK
   /api/v3/public/orders/service_types:
     get:
       tags:
         - '[Public] Order'
-      summary: This endpoint retrieves a company's service_type metadata and non-operating days
+      summary: >-
+        This endpoint retrieves a company's service_type metadata and
+        non-operating days
       operationId: ApiWeb.V3.Public.OrdersController.service_types
       parameters:
         - name: company_slug
@@ -3163,6 +3239,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/order_items:
     get:
       tags:
@@ -3582,10 +3661,10 @@ paths:
             type: string
         - name: id
           in: path
-          description: id of the OrderItem
+          description: Order Item id
           required: true
           schema:
-            type: string
+            type: integer
       responses:
         '200':
           description: OK
@@ -3594,7 +3673,9 @@ paths:
     post:
       tags:
         - '[Worker] Task'
-      summary: This endpoint marks a Task as failed by creating an associated TaskException
+      summary: >-
+        This endpoint marks a Task as failed by creating an associated
+        TaskException
       operationId: ApiWeb.V3.Worker.TaskController.mark_as_failed
       parameters:
         - name: ACCESS_TOKEN
@@ -3657,6 +3738,9 @@ paths:
           description: sender organisation slug - required for organisational sender
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/workers/{id}/assign_vehicle':
     put:
       tags:
@@ -3689,6 +3773,9 @@ paths:
             schema:
               $ref: '#/components/schemas/DispatcherAssignVehicleRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: worker
   /api/v3/sender/orders/completed:
     get:
@@ -3759,6 +3846,9 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkTaskCompletionRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: tasks
   '/api/v3/sender/orders/{number}/payments':
     post:
@@ -3830,6 +3920,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/public/orders/item_types:
     get:
       tags:
@@ -3915,6 +4008,9 @@ paths:
           required: true
           schema:
             type: integer
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/item_types/{id}':
     get:
       tags:
@@ -4072,6 +4168,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/task_groups/unassigned:
     get:
       tags:
@@ -4132,7 +4231,10 @@ paths:
       tags:
         - '[Sender] Order'
       summary: Cancel Order
-      description: 'This API is used to cancel an order. Require input one of 4 fields(order_number, order_external_id, tracking_number, external_customer_id)'
+      description: >-
+        This API is used to cancel an order. Require input one of 4
+        fields(order_number, order_external_id, tracking_number,
+        external_customer_id)
       operationId: ApiWeb.V3.Sender.OrderController.cancel_order
       parameters:
         - name: ACCESS_TOKEN
@@ -4190,26 +4292,189 @@ paths:
       requestBody:
         description: Order information
         content:
-          '*/*':
+          application/json:
             schema:
               $ref: '#/components/schemas/SenderCreateOrderRequest'
-        required: false
+            examples:
+              single leg:
+                value:
+                  steps:
+                    - to_time: '2021-07-07T19:53:12.580Z'
+                      state: SingaporeO
+                      postal_code: '112233'
+                      lng: 103.7647132
+                      lat: 1.4630478
+                      from_time: '2021-07-07T11:53:12.580Z'
+                      country: sg
+                      contact_phone: 6581551123
+                      contact_name: vivek
+                      contact_email: sender@example.com
+                      contact_company: Adidas
+                      address2: 160 Robinson Road
+                      address: 80 Robinson Road
+                    - to_time: '2021-07-08T03:53:12.580Z'
+                      state: Singapore
+                      postal_code: '332211'
+                      lng: 103.7647132
+                      lat: 1.4630478
+                      from_time: '2021-07-07T19:53:12.580Z'
+                      country: Singapore
+                      contact_phone: 6581551123
+                      contact_name: vivek
+                      contact_email: recipient@example.com
+                      contact_company: Nike
+                      address2: 50 Boon Keng Rd
+                      address: Boon Keng Rd
+                  sender_type: organisation
+                  sender_id: 1
+                  price_currency: SGD
+                  price_amount: 10
+                  items:
+                    - width: 1
+                      weight: 1
+                      volumetric_weight: 10
+                      volume: 200
+                      service_type: same_day
+                      quantity: 2
+                      price_info: Surcharge 2.00
+                      price_amount: '10.00'
+                      payload_type: Package
+                      length: 1
+                      info: info_test
+                      height: 1
+                      external_customer_id3: external_customer_id3_test
+                      external_customer_id2: external_customer_id2_test
+                      external_customer_id: external_customer_id_test
+                      description: Gift
+                  item_steps:
+                    - type: pickup
+                      order_step_id: 0
+                      item_id: 0
+                    - type: dropoff
+                      order_step_id: 1
+                      item_id: 0
+                  external_id: 'External test #1'
+                  container_no: 'Container test #1'
+              multi-leg:
+                value:
+                  steps:
+                    - to_time: '2021-07-07T19:53:12.580Z'
+                      state: Singapore
+                      postal_code: '112233'
+                      lng: 103.7647132
+                      lat: 1.4630478
+                      from_time: '2021-07-07T11:53:12.580Z'
+                      country: sg
+                      contact_phone: 6581551123
+                      contact_name: vivek
+                      contact_email: sender@example.com
+                      contact_company: Adidas
+                      address2: 160 Robinson Road
+                      address: 80 Robinson Road
+                    - to_time: '2021-07-08T03:53:12.580Z'
+                      state: Singapore
+                      postal_code: '332211'
+                      lng: 103.7647132
+                      lat: 1.4630478
+                      from_time: '2021-07-07T19:53:12.580Z'
+                      country: Singapore
+                      contact_phone: 6581551123
+                      contact_name: vivek
+                      contact_email: recipient@example.com
+                      contact_company: Nike
+                      address2: 50 Boon Keng Rd
+                      address: Boon Keng Rd
+                    - to_time: '2021-07-07T19:53:12.580Z'
+                      state: Singapore
+                      postal_code: '112233'
+                      lng: 103.7647132
+                      lat: 1.4630478
+                      from_time: '2021-07-07T11:53:12.580Z'
+                      country: sg
+                      contact_phone: 6581551123
+                      contact_name: vivek
+                      contact_email: sender@example.com
+                      contact_company: Samsung
+                      address2: 160 Jurong Garden Road
+                      address: 80 Jurong Lake Road
+                    - to_time: '2021-07-08T03:53:12.580Z'
+                      state: Singapore
+                      postal_code: '332211'
+                      lng: 103.7647132
+                      lat: 1.4630478
+                      from_time: '2021-07-07T19:53:12.580Z'
+                      country: Singapore
+                      contact_phone: 6581551123
+                      contact_name: vivek
+                      contact_email: recipient@example.com
+                      contact_company: Sony
+                      address2: 150 East Coast Rd
+                      address: 156 East Garden Rd
+                  sender_type: organisation
+                  sender_id: 1
+                  price_currency: SGD
+                  price_amount: 10
+                  items:
+                    - width: 1
+                      weight: 1
+                      volumetric_weight: 10
+                      volume: 200
+                      service_type: same_day
+                      quantity: 2
+                      price_info: Surcharge 2.00
+                      price_amount: '10.00'
+                      payload_type: Package
+                      length: 1
+                      info: info_test
+                      height: 1
+                      external_customer_id3: external_customer_id3_test
+                      external_customer_id2: external_customer_id2_test
+                      external_customer_id: external_customer_id_test
+                      description: Gift
+                  item_steps:
+                    - type: pickup
+                      order_step_id: 0
+                      item_id: 0
+                    - type: dropoff
+                      order_step_id: 1
+                      item_id: 0
+                    - type: pickup
+                      order_step_id: 2
+                      item_id: 0
+                    - type: dropoff
+                      order_step_id: 3
+                      item_id: 0
+                  external_id: 'External test #1'
+                  container_no: 'Container test #1'
       responses:
         '200':
           description: Create order response success
           content:
-            '*/*':
+            application/json:
               schema:
                 $ref: '#/components/schemas/SenderCreateOrderResponse'
         '422':
           description: Error
-          content: {}
+          content:
+            application/json:
+              examples:
+                order not found:
+                  value:
+                    status: 400
+                    message: Invalid Order!
+                order already delivered:
+                  value:
+                    data:
+                      BK0543:
+                        - Transfer already accepted
       x-codegen-request-body-name: order
   /api/v3/dispatcher/network/regions_in_charge:
     get:
       tags:
         - '[Dispatcher] Network'
-      summary: This endpoint retrieves a list of Regions which dispatcher is in charge of
+      summary: >-
+        This endpoint retrieves a list of Regions which dispatcher is in charge
+        of
       operationId: ApiWeb.V3.Dispatcher.Network.RegionController.regions_in_charge
       parameters:
         - name: ACCESS_TOKEN
@@ -4321,6 +4586,9 @@ paths:
             schema:
               $ref: '#/components/schemas/TripCreateRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: tasks
   '/api/v3/dispatcher/partners/{id}/mark_active':
     put:
@@ -4372,7 +4640,9 @@ paths:
             type: string
         - name: status
           in: query
-          description: 'An array of statuses, e.g: [broadcasted, assigned, accepted, completed, cancelled]'
+          description: >-
+            An array of statuses, e.g: [broadcasted, assigned, accepted,
+            completed, cancelled]
           style: form
           explode: false
           schema:
@@ -4428,7 +4698,8 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/DispatcherCreateMultipleWorkersErrorResponse'
+                $ref: >-
+                  #/components/schemas/DispatcherCreateMultipleWorkersErrorResponse
       x-codegen-request-body-name: worker
   '/api/v3/dispatcher/company/task_type_mappings/{id}':
     delete:
@@ -4605,6 +4876,9 @@ paths:
             schema:
               $ref: '#/components/schemas/QuickAssignRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: tasks
   /api/v3/dispatcher/power/tasks:
     get:
@@ -4735,7 +5009,9 @@ paths:
               type: integer
         - name: show_incomplete_info_order_step
           in: query
-          description: show incomplete info order_step - absence means ignore `incomplete info` trait
+          description: >-
+            show incomplete info order_step - absence means ignore `incomplete
+            info` trait
           schema:
             type: boolean
           example: true / false
@@ -4863,6 +5139,9 @@ paths:
           schema:
             type: integer
             default: 30
+      responses:
+        '200':
+          description: OK
     post:
       tags:
         - '[Dispatcher] PowerTask'
@@ -4989,6 +5268,14 @@ paths:
             type: array
             items:
               type: integer
+        - name: show_incomplete_info_order_step
+          in: query
+          description: >-
+            show incomplete info order_step - absence means ignore `incomplete
+            info` trait
+          schema:
+            type: boolean
+          example: true / false
         - name: from_completion_time
           in: query
           description: from completion time
@@ -5113,6 +5400,9 @@ paths:
           schema:
             type: integer
             default: 30
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/workers/batches:
     post:
       tags:
@@ -5141,12 +5431,16 @@ paths:
                   type: string
                   description: The file to upload
                   format: binary
+      responses:
+        '200':
+          description: OK
   '/api/v3/public/labels/order_item/{tracking_number}':
     get:
       tags:
         - '[Public] Docs'
       summary: This endpoint generates a Label from a tracking number
-      operationId: ApiWeb.V3.Public.LabelController.generate_from_tracking_number
+      operationId: >-
+        ApiWeb.V3.Public.LabelController.generate_from_tracking_number.order_items
       parameters:
         - name: tracking_number
           in: path
@@ -5164,7 +5458,7 @@ paths:
           description: Label to be downloaded.
           content: {}
         '422':
-          description: Error
+          description: ERROR
           content: {}
   '/api/v3/dispatcher/sub_task_rules/{id}':
     get:
@@ -5414,7 +5708,9 @@ paths:
     get:
       tags:
         - '[Dispatcher] ItemType'
-      summary: This endpoint retrieves item types of current company of user; if no params page and page_size then return all items
+      summary: >-
+        This endpoint retrieves item types of current company of user; if no
+        params page and page_size then return all items
       operationId: ApiWeb.V3.Dispatcher.ItemTypeController.index
       parameters:
         - name: ACCESS_TOKEN
@@ -5495,7 +5791,9 @@ paths:
       parameters:
         - name: time_zone
           in: query
-          description: 'timezone, if not specified, it will use the timezone in the company setting'
+          description: >-
+            timezone, if not specified, it will use the timezone in the company
+            setting
           schema:
             type: string
           example: Singapore
@@ -5575,6 +5873,9 @@ paths:
             schema:
               $ref: '#/components/schemas/SavedFilterUpdateRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: tasks
     delete:
       tags:
@@ -5633,6 +5934,9 @@ paths:
             schema:
               $ref: '#/components/schemas/SavedFilterUpdateRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: tasks
   /api/v3/dispatcher/master_vehicle_types:
     get:
@@ -5702,6 +6006,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/order_items/{id}/hierarchy':
     get:
       tags:
@@ -5748,10 +6055,10 @@ paths:
             type: string
       responses:
         '200':
-          description: Ok
+          description: OK
           content: {}
         '422':
-          description: Error
+          description: ERROR
           content: {}
   '/api/v3/dispatcher/users/{id}':
     put:
@@ -5960,12 +6267,17 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkTaskCompletionRequestByDispatcher'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: tasks
   '/api/v3/enterprise/user/{id}/update':
     put:
       tags:
         - '[Enterprise] User'
-      summary: This endpoint updates an enterprise user (optionally with dispatcher in companies)
+      summary: >-
+        This endpoint updates an enterprise user (optionally with dispatcher in
+        companies)
       operationId: ApiWeb.V3.Enterprise.EnterpriseUserController.update_enterprise_user
       parameters:
         - name: ACCESS_TOKEN
@@ -5982,10 +6294,10 @@ paths:
             type: string
         - name: id
           in: path
-          description: id of the user
+          description: id of the User
           required: true
           schema:
-            type: string
+            type: integer
       requestBody:
         description: Enterprise user information
         content:
@@ -6127,7 +6439,9 @@ paths:
     post:
       tags:
         - '[Dispatcher] Task'
-      summary: This endpoint assigns/reassigns a tasks from planner to a recommended worker
+      summary: >-
+        This endpoint assigns/reassigns a tasks from planner to a recommended
+        worker
       operationId: ApiWeb.V3.Dispatcher.AllocationController.allocate
       parameters:
         - name: ACCESS_TOKEN
@@ -6149,12 +6463,17 @@ paths:
             schema:
               $ref: '#/components/schemas/AllocationRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: tasks
   /api/v3/dispatcher/driver_manifest:
     get:
       tags:
         - '[Dispatcher] Driver Manifest Jwt'
-      summary: this endpoint generate driver manifest url by issuing a jwt token for dashboard and report that expires in one hour
+      summary: >-
+        this endpoint generate driver manifest url by issuing a jwt token for
+        dashboard and report that expires in one hour
       operationId: ApiWeb.V3.Dispatcher.DashboardController.generate_driver_manifest_url
       parameters:
         - name: ACCESS_TOKEN
@@ -6174,6 +6493,9 @@ paths:
           description: Worker ID
           schema:
             type: integer
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/network/hubs:
     get:
       tags:
@@ -6256,7 +6578,7 @@ paths:
           description: Pod to be downloaded.
           content: {}
         '422':
-          description: Error
+          description: ERROR
           content: {}
   /api/v3/dispatcher/sub_task_rules:
     get:
@@ -6401,6 +6723,9 @@ paths:
           description: Price's amount
           schema:
             type: number
+      responses:
+        '200':
+          description: OK
   /api/v3/public/jwt/auth_token:
     post:
       tags:
@@ -6506,6 +6831,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/order_items/{order_item_id}/sub_tasks':
     get:
       tags:
@@ -6591,14 +6919,16 @@ paths:
         required: false
       responses:
         '200':
-          description: Ok
+          description: OK
           content: {}
       x-codegen-request-body-name: service_type
   '/api/v3/dispatcher/order_items/{id}/update_multi':
     put:
       tags:
         - '[Dispatcher] OrderItem'
-      summary: This endpoint is used by a Dispatcher to update an OrderItem with multi leg
+      summary: >-
+        This endpoint is used by a Dispatcher to update an OrderItem with multi
+        leg
       operationId: ApiWeb.V3.Dispatcher.OrderItemController.update_multi_leg
       parameters:
         - name: ACCESS_TOKEN
@@ -6745,7 +7075,9 @@ paths:
     get:
       tags:
         - '[Worker] Task'
-      summary: This endpoint is used by a Worker to check multiple Tasks whether they are ready for completion
+      summary: >-
+        This endpoint is used by a Worker to check multiple Tasks whether they
+        are ready for completion
       operationId: ApiWeb.V3.Worker.TaskController.validate_completion
       parameters:
         - name: ACCESS_TOKEN
@@ -6829,6 +7161,9 @@ paths:
                   type: string
                   description: The file to upload
                   format: binary
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/trips/{id}/cancel':
     post:
       tags:
@@ -6854,6 +7189,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/organisations/{organisation_id}/senders/{id}':
     put:
       tags:
@@ -7108,6 +7446,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   '/api/v3/public/pods/order_item/{tracking_number}':
     get:
       tags:
@@ -7131,7 +7472,7 @@ paths:
           description: Pod to be downloaded.
           content: {}
         '422':
-          description: Error
+          description: ERROR
           content: {}
   '/api/v3/public/labels/order/{order_number}':
     get:
@@ -7156,7 +7497,7 @@ paths:
           description: Label to be downloaded.
           content: {}
         '422':
-          description: Error
+          description: ERROR
           content: {}
   /api/v3/dispatcher/chat/send_message:
     post:
@@ -7229,6 +7570,9 @@ paths:
           schema:
             type: integer
             default: 10
+      responses:
+        '200':
+          description: OK
   /api/v3/public/orders/company_info:
     get:
       tags:
@@ -7242,6 +7586,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/partner_transfer/sender/create_order:
     post:
       tags:
@@ -7280,7 +7627,9 @@ paths:
     post:
       tags:
         - '[Enterprise] User'
-      summary: This endpoint creates an enterprise user (optionally with dispatcher in companies)
+      summary: >-
+        This endpoint creates an enterprise user (optionally with dispatcher in
+        companies)
       operationId: ApiWeb.V3.Enterprise.EnterpriseUserController.create_enterprise_user
       parameters:
         - name: ACCESS_TOKEN
@@ -7348,7 +7697,8 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/DispatcherCreateMultipleUsersErrorResponse'
+                $ref: >-
+                  #/components/schemas/DispatcherCreateMultipleUsersErrorResponse
       x-codegen-request-body-name: dis
   /api/v3/dispatcher/company/assets:
     post:
@@ -7396,7 +7746,9 @@ paths:
     get:
       tags:
         - '[Sender] Route Schedules'
-      summary: This endpoint retrieves a list of route schedules based on search parameters
+      summary: >-
+        This endpoint retrieves a list of route schedules based on search
+        parameters
       operationId: ApiWeb.V3.Sender.RouteScheduleController.search
       parameters:
         - name: ACCESS_TOKEN
@@ -7655,7 +8007,8 @@ paths:
           content:
             '*/*':
               schema:
-                $ref: '#/components/schemas/DispatcherCreateMultipleSendersErrorResponse'
+                $ref: >-
+                  #/components/schemas/DispatcherCreateMultipleSendersErrorResponse
       x-codegen-request-body-name: sender
   /api/v3/dispatcher/vehicle_types2:
     get:
@@ -7772,7 +8125,8 @@ paths:
       tags:
         - '[Dispatcher] Company'
       summary: This endpoint updates a Company's task exception other reason settings
-      operationId: ApiWeb.V3.Dispatcher.CompanyController.update_task_exception_reason_settings
+      operationId: >-
+        ApiWeb.V3.Dispatcher.CompanyController.update_task_exception_reason_settings
       parameters:
         - name: ACCESS_TOKEN
           in: header
@@ -7791,7 +8145,8 @@ paths:
         content:
           '*/*':
             schema:
-              $ref: '#/components/schemas/CompanyUpdateSettingTaskExceptionOtherReasonRequest'
+              $ref: >-
+                #/components/schemas/CompanyUpdateSettingTaskExceptionOtherReasonRequest
         required: false
       responses:
         '200':
@@ -7825,6 +8180,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/public/rates/rate_charge_types:
     get:
       tags:
@@ -7902,6 +8260,9 @@ paths:
             schema:
               $ref: '#/components/schemas/RateChargeTypesRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: rate_charge_type
   '/api/v3/worker/stops/{id}':
     get:
@@ -7993,14 +8354,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetPricesResponse'
         '500':
-          description: Error
+          description: OK
           content: {}
       x-codegen-request-body-name: order
   /api/v3/public/orders/validate:
     post:
       tags:
         - '[Public] Order'
-      summary: This endpoint is used in public to check order data whether they are valid or not
+      summary: >-
+        This endpoint is used in public to check order data whether they are
+        valid or not
       operationId: ApiWeb.V3.Public.OrdersController.validate_order
       requestBody:
         description: Order information
@@ -8011,7 +8374,7 @@ paths:
         required: false
       responses:
         '200':
-          description: Ok
+          description: OK
           content:
             '*/*':
               schema:
@@ -8034,13 +8397,15 @@ paths:
           description: Worker manifest to be downloaded.
           content: {}
         '422':
-          description: Error
+          description: ERROR
           content: {}
   /api/v3/dispatcher/batches/batched:
     post:
       tags:
         - '[Dispatcher] Batched batch single sender'
-      summary: This endpoint is used by a Dispatcher to upload a batch (list) of batch upload files by a single sender
+      summary: >-
+        This endpoint is used by a Dispatcher to upload a batch (list) of batch
+        upload files by a single sender
       operationId: ApiWeb.V3.Dispatcher.BatchController.create_batched
       parameters:
         - name: ACCESS_TOKEN
@@ -8079,6 +8444,9 @@ paths:
                   type: string
                   description: The list of files to upload (array)
                   format: binary
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/partners/{cip}/send_invite':
     put:
       tags:
@@ -8118,7 +8486,9 @@ paths:
     get:
       tags:
         - '[Worker]'
-      summary: This endpoint retrieves a list of Companies that a phone number is registered as a Worker in
+      summary: >-
+        This endpoint retrieves a list of Companies that a phone number is
+        registered as a Worker in
       operationId: ApiWeb.V3.Worker.InfoController.companies
       parameters:
         - name: ACCESS_TOKEN
@@ -8203,6 +8573,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/orders/{number}':
     get:
       tags:
@@ -8387,6 +8760,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/roles:
     get:
       tags:
@@ -8440,14 +8816,16 @@ paths:
         required: false
       responses:
         '200':
-          description: Ok
+          description: OK
           content: {}
       x-codegen-request-body-name: role
   '/api/v3/dispatcher/batches/{id}/continue':
     put:
       tags:
         - '[Dispatcher] Batch'
-      summary: This endpoint continues submiting a Batch regardless of being given missing info
+      summary: >-
+        This endpoint continues submiting a Batch regardless of being given
+        missing info
       operationId: ApiWeb.V3.Dispatcher.BatchController.continue
       parameters:
         - name: id
@@ -8526,6 +8904,9 @@ paths:
                   type: string
                   description: The file to upload
                   format: binary
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/task_groups/assigned:
     get:
       tags:
@@ -8547,7 +8928,9 @@ paths:
             type: string
         - name: status
           in: query
-          description: 'an array of status for task group, ie: [assigned, accepted, completed, cancelled], defaults to [assigned]'
+          description: >-
+            an array of status for task group, ie: [assigned, accepted,
+            completed, cancelled], defaults to [assigned]
           schema:
             type: string
         - name: worker_type
@@ -8600,7 +8983,9 @@ paths:
     put:
       tags:
         - '[Worker] SubTask'
-      summary: 'This endpoint completes a SubTask, this api behave the same when Put and Post'
+      summary: >-
+        This endpoint completes a SubTask, this api behave the same when Put and
+        Post
       operationId: ApiWeb.V3.Worker.SubTaskController.update
       parameters:
         - name: ACCESS_TOKEN
@@ -8633,7 +9018,9 @@ paths:
     post:
       tags:
         - '[Worker] SubTask'
-      summary: 'This endpoint completes a SubTask, this api behave the same when Put and Post'
+      summary: >-
+        This endpoint completes a SubTask, this api behave the same when Put and
+        Post
       operationId: ApiWeb.V3.Worker.SubTaskController.create
       parameters:
         - name: ACCESS_TOKEN
@@ -8732,8 +9119,11 @@ paths:
     post:
       tags:
         - '[Enterprise] User'
-      summary: This endpoint removes an enterprise user from companies (as a dispatcher)
-      operationId: ApiWeb.V3.Enterprise.EnterpriseUserController.remove_enterprise_user_from_companies
+      summary: >-
+        This endpoint removes an enterprise user from companies (as a
+        dispatcher)
+      operationId: >-
+        ApiWeb.V3.Enterprise.EnterpriseUserController.remove_enterprise_user_from_companies
       parameters:
         - name: ACCESS_TOKEN
           in: header
@@ -8833,6 +9223,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/chat/channel/{channel_id}':
     get:
       tags:
@@ -8863,6 +9256,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/orders/cancel:
     post:
       tags:
@@ -9113,11 +9509,16 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/jwt/control_tower:
     post:
       tags:
         - '[Dispatcher] Jwt'
-      summary: this endpoint issues a jwt token that expires in two hours and can be used for live data of partner
+      summary: >-
+        this endpoint issues a jwt token that expires in two hours and can be
+        used for live data of partner
       operationId: ApiWeb.V3.Dispatcher.JwtController.issue_token_control_tower
       parameters:
         - name: ACCESS_TOKEN
@@ -9134,7 +9535,9 @@ paths:
             type: string
       responses:
         '200':
-          description: returns generated JWT based on current dispatcher and partner company
+          description: >-
+            returns generated JWT based on current dispatcher and partner
+            company
           content:
             '*/*':
               schema:
@@ -9164,7 +9567,9 @@ paths:
     get:
       tags:
         - '[Worker]'
-      summary: This endpoint retrieves configuration information about a Worker's Company
+      summary: >-
+        This endpoint retrieves configuration information about a Worker's
+        Company
       operationId: ApiWeb.V3.Worker.CompanyController.config
       parameters:
         - name: ACCESS_TOKEN
@@ -9210,6 +9615,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
       deprecated: true
   /api/v3/worker/info:
     get:
@@ -9431,18 +9839,23 @@ paths:
           description: from time
           schema:
             type: string
-          example: '2018-03-10T03:37:08.000Z'
+          example: 2018-03-10T03:37:08.000Z
         - name: to
           in: query
           description: from time
           schema:
             type: string
-          example: '2018-03-11T03:37:08.000Z'
+          example: 2018-03-11T03:37:08.000Z
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/dispatchers/senders:
     get:
       tags:
         - '[Dispatcher] CorporateSender'
-      summary: This endpoint retrieves a list of Sender Admins and the Organisations they manage
+      summary: >-
+        This endpoint retrieves a list of Sender Admins and the Organisations
+        they manage
       operationId: ApiWeb.V3.Dispatcher.DispatcherController.sender_admins
       parameters:
         - name: ACCESS_TOKEN
@@ -9616,6 +10029,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/worker_teams:
     get:
       tags:
@@ -9776,7 +10192,9 @@ paths:
     post:
       tags:
         - '[Dispatcher] Task'
-      summary: This endpoint marks a Task as failed by creating an associated TaskException
+      summary: >-
+        This endpoint marks a Task as failed by creating an associated
+        TaskException
       operationId: ApiWeb.V3.Dispatcher.TaskController.mark_as_failed
       parameters:
         - name: ACCESS_TOKEN
@@ -9819,8 +10237,11 @@ paths:
     get:
       tags:
         - '[Dispatcher] Dashboard and Report Jwt'
-      summary: this endpoint generate dashboard and report url by issuing a jwt token for dashboard and report that expires in one hour
-      operationId: ApiWeb.V3.Dispatcher.DashboardController.generate_dashboard_and_report_url_old
+      summary: >-
+        this endpoint generate dashboard and report url by issuing a jwt token
+        for dashboard and report that expires in one hour
+      operationId: >-
+        ApiWeb.V3.Dispatcher.DashboardController.generate_dashboard_and_report_url_old
       parameters:
         - name: ACCESS_TOKEN
           in: header
@@ -9839,12 +10260,18 @@ paths:
           description: Type
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
       deprecated: true
     post:
       tags:
         - '[Dispatcher] Dashboard and Report Jwt'
-      summary: this endpoint generate dashboard and report url by issuing a jwt token for dashboard and report that expires in one hour
-      operationId: ApiWeb.V3.Dispatcher.DashboardController.generate_dashboard_and_report_url
+      summary: >-
+        this endpoint generate dashboard and report url by issuing a jwt token
+        for dashboard and report that expires in one hour
+      operationId: >-
+        ApiWeb.V3.Dispatcher.DashboardController.generate_dashboard_and_report_url
       parameters:
         - name: ACCESS_TOKEN
           in: header
@@ -9863,6 +10290,9 @@ paths:
         content:
           '*/*': {}
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: report_params
   '/api/v3/dispatcher/batches/{id}/cancel':
     put:
@@ -10051,7 +10481,9 @@ paths:
             type: string
         - name: status
           in: query
-          description: 'an array of status for order, ie: [created, accepted, completed, cancelled]'
+          description: >-
+            an array of status for order, ie: [created, accepted, completed,
+            cancelled]
           schema:
             type: string
         - name: paid
@@ -10133,14 +10565,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/DispatcherCreateOrderResponse'
         '422':
-          description: Ok
+          description: ERROR
           content: {}
       x-codegen-request-body-name: order
   /api/v3/dispatcher/orders/get_item_count:
     post:
       tags:
         - '[Dispatcher] Order'
-      summary: This endpoint is used by a Dispatcher to get the order item count for an Order
+      summary: >-
+        This endpoint is used by a Dispatcher to get the order item count for an
+        Order
       operationId: ApiWeb.V3.Dispatcher.OrderController.get_item_count
       parameters:
         - name: ACCESS_TOKEN
@@ -10160,6 +10594,9 @@ paths:
         content:
           '*/*': {}
         required: true
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: order_numbers
   '/api/v3/dispatcher/task_groups/{id}/unassign_worker':
     put:
@@ -10186,6 +10623,9 @@ paths:
           required: true
           schema:
             type: integer
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/saved_filter:
     get:
       tags:
@@ -10246,10 +10686,10 @@ paths:
           example: cGc2RUIwSUZsTGRHQXpzUTJ4WTZ6Zz09
       responses:
         '200':
-          description: Ok
+          description: OK
           content: {}
         '500':
-          description: Error
+          description: ERROR
           content: {}
   '/api/v3/dispatcher/rates/calculate/{rate_entry_id}':
     post:
@@ -10638,6 +11078,9 @@ paths:
             schema:
               $ref: '#/components/schemas/RateChargeTypesRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: rate_charge_type
     delete:
       tags:
@@ -10696,6 +11139,9 @@ paths:
             schema:
               $ref: '#/components/schemas/RateChargeTypesRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: rate_charge_type
   /api/v3/public/otp:
     get:
@@ -10735,12 +11181,15 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/address_items:
     get:
       tags:
         - '[Dispatcher] Addressbook'
       summary: 'This endpoint lists address items of a company, supporting search'
-      operationId: ApiWeb.V3.Dispatcher.AddressItemController.index
+      operationId: ApiWeb.V3.Dispatcher.AddressItemController.index.2
       parameters:
         - name: ACCESS_TOKEN
           in: header
@@ -10808,6 +11257,9 @@ paths:
             type: string
             enum:
               - external_id
+      responses:
+        '200':
+          description: OK
     put:
       tags:
         - '[Dispatcher] Addressbook'
@@ -10945,6 +11397,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/workers/batches/{id}/status':
     get:
       tags:
@@ -11049,6 +11504,9 @@ paths:
           required: true
           schema:
             type: integer
+      responses:
+        '200':
+          description: OK
   '/api/v3/worker/task_groups/{id}/accept':
     put:
       tags:
@@ -11093,7 +11551,9 @@ paths:
     post:
       tags:
         - '[Dispatcher] Jwt'
-      summary: this endpoint issues a jwt token that expires in two hours and can be used for live data of delivery
+      summary: >-
+        this endpoint issues a jwt token that expires in two hours and can be
+        used for live data of delivery
       operationId: ApiWeb.V3.Public.JwtController.issue_token_delivery_tracker
       parameters:
         - name: ACCESS_TOKEN
@@ -11146,6 +11606,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/organisation_senders:
     get:
       tags:
@@ -11790,6 +12253,9 @@ paths:
           schema:
             type: integer
           example: 1
+      responses:
+        '200':
+          description: OK
     patch:
       tags:
         - '[Dispatcher] WorkerTeam'
@@ -11978,7 +12444,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DispatcherCreateOrderResponse'
         '422':
-          description: Error
+          description: ERROR
           content: {}
       x-codegen-request-body-name: order
   /api/v3/dispatcher/chat/channels:
@@ -12000,6 +12466,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/worker/location:
     put:
       tags:
@@ -12094,7 +12563,9 @@ paths:
     get:
       tags:
         - '[Dispatcher] CorporateSender'
-      summary: This endpoint retrieves a list of Corporates (aka Organisations) managed by a Dispatcher
+      summary: >-
+        This endpoint retrieves a list of Corporates (aka Organisations) managed
+        by a Dispatcher
       operationId: ApiWeb.V3.Dispatcher.OrganisationController.index
       parameters:
         - name: ACCESS_TOKEN
@@ -12233,7 +12704,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetOrderPricesResponse'
         '500':
-          description: Error
+          description: ERROR
           content: {}
       x-codegen-request-body-name: order
   '/api/v3/dispatcher/network/regions/{id}':
@@ -12429,6 +12900,9 @@ paths:
             type: array
             items:
               type: object
+      responses:
+        '200':
+          description: OK
     post:
       tags:
         - '[Dispatcher] Schedule'
@@ -12454,6 +12928,9 @@ paths:
             schema:
               $ref: '#/components/schemas/ScheduleRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: schedule
   /api/v3/dispatcher/plans:
     get:
@@ -12738,10 +13215,10 @@ paths:
             type: string
       responses:
         '200':
-          description: Ok
+          description: OK
           content: {}
         '422':
-          description: Error
+          description: ERROR
           content: {}
     post:
       tags:
@@ -12767,10 +13244,10 @@ paths:
             type: string
       responses:
         '200':
-          description: Ok
+          description: OK
           content: {}
         '422':
-          description: Error
+          description: ERROR
           content: {}
     patch:
       tags:
@@ -12790,10 +13267,10 @@ paths:
             type: string
       responses:
         '200':
-          description: Ok
+          description: OK
           content: {}
         '422':
-          description: Error
+          description: ERROR
           content: {}
   /api/v3/worker/tasks/completed:
     get:
@@ -12837,11 +13314,16 @@ paths:
           schema:
             type: integer
             default: 10
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/companies/config:
     get:
       tags:
         - '[Dispatcher]'
-      summary: This endpoint retrieves configuration information about a Dispatcher's Company
+      summary: >-
+        This endpoint retrieves configuration information about a Dispatcher's
+        Company
       operationId: ApiWeb.V3.Dispatcher.CompanyController.config
       parameters:
         - name: ACCESS_TOKEN
@@ -12887,6 +13369,9 @@ paths:
           description: Worker ID
           schema:
             type: integer
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/rates/calculate_order/{number}':
     post:
       tags:
@@ -12917,6 +13402,9 @@ paths:
         content:
           '*/*': {}
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: rate_entry_id
   /api/v3/dispatcher/dispatch_rule:
     get:
@@ -12969,12 +13457,17 @@ paths:
             schema:
               $ref: '#/components/schemas/DispatchRuleCreateRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: tasks
   /api/v3/dispatcher/sub_tasks:
     put:
       tags:
         - '[Dispatcher] SubTask'
-      summary: 'This endpoint completes a SubTask, this api behave the same when Put and Post'
+      summary: >-
+        This endpoint completes a SubTask, this api behave the same when Put and
+        Post
       operationId: ApiWeb.V3.Dispatcher.SubTaskController.update
       parameters:
         - name: ACCESS_TOKEN
@@ -13007,7 +13500,9 @@ paths:
     post:
       tags:
         - '[Dispatcher] SubTask'
-      summary: 'This endpoint completes a SubTask, this api behave the same when Put and Post'
+      summary: >-
+        This endpoint completes a SubTask, this api behave the same when Put and
+        Post
       operationId: ApiWeb.V3.Dispatcher.SubTaskController.create
       parameters:
         - name: ACCESS_TOKEN
@@ -13142,13 +13637,16 @@ paths:
             schema:
               $ref: '#/components/schemas/SavedFilterCreateRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: saved_filter
   '/api/v3/public/labels/{tracking_number}':
     get:
       tags:
         - '[Public] Docs'
       summary: This endpoint generates a Label from a tracking number
-      operationId: ApiWeb.V3.Public.LabelController.order_item.generate_from_tracking_number
+      operationId: ApiWeb.V3.Public.LabelController.generate_from_tracking_number
       parameters:
         - name: tracking_number
           in: path
@@ -13166,7 +13664,7 @@ paths:
           description: Label to be downloaded.
           content: {}
         '422':
-          description: Label generation error.
+          description: ERROR
           content: {}
   '/api/v3/dispatcher/workers/{id}/approve':
     put:
@@ -13233,6 +13731,9 @@ paths:
             schema:
               $ref: '#/components/schemas/DispatcherRemoveWorkersToTeamRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: worker_team
   '/api/v3/dispatcher/task_groups/{id}/assign_worker':
     put:
@@ -13274,6 +13775,9 @@ paths:
           description: Price's amount
           schema:
             type: number
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/trips/{id}/complete':
     post:
       tags:
@@ -13299,6 +13803,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/search/vehicle:
     get:
       tags:
@@ -13338,6 +13845,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/plans/{id}':
     get:
       tags:
@@ -13583,7 +14093,9 @@ paths:
     post:
       tags:
         - '[Dispatcher] OrderItem'
-      summary: this endpoint is used to deconsolidate one or more items from another one
+      summary: >-
+        this endpoint is used to deconsolidate one or more items from another
+        one
       operationId: ApiWeb.V3.Dispatcher.OrderItemController.deconsolidate
       parameters:
         - name: ACCESS_TOKEN
@@ -13598,6 +14110,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/order_items/{id}/jobs':
     get:
       tags:
@@ -13659,6 +14174,9 @@ paths:
           description: sender organisation slug - required for organisational sender
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
       deprecated: true
   /api/v3/dispatcher/company/configurations/plugin:
     put:
@@ -13679,12 +14197,22 @@ paths:
           required: true
           schema:
             type: string
+        - name: name
+          in: query
+          description: Plugin name
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
   '/api/v3/dispatcher/senders/{id}/order_field_template':
     get:
       tags:
         - '[Dispatcher] Sender'
       summary: This endpoint retrieves a sender's order field template
-      operationId: ApiWeb.V3.Dispatcher.OrderFieldTemplateController.show_order_field_template
+      operationId: >-
+        ApiWeb.V3.Dispatcher.OrderFieldTemplateController.show_order_field_template
       parameters:
         - name: ACCESS_TOKEN
           in: header
@@ -13715,7 +14243,8 @@ paths:
       tags:
         - '[Dispatcher] Sender'
       summary: This endpoint deletes an order field template for a sender
-      operationId: ApiWeb.V3.Dispatcher.OrderFieldTemplateController.delete_order_field_template
+      operationId: >-
+        ApiWeb.V3.Dispatcher.OrderFieldTemplateController.delete_order_field_template
       parameters:
         - name: ACCESS_TOKEN
           in: header
@@ -13790,7 +14319,9 @@ paths:
       tags:
         - '[Sender] Order Item'
       summary: This endpoint cancels an Order Item
-      description: 'This API is used to cancel an order item. Require input one of 3 fields(ids, tracking_numbers, external_customer_ids)'
+      description: >-
+        This API is used to cancel an order item. Require input one of 3
+        fields(ids, tracking_numbers, external_customer_ids)
       operationId: ApiWeb.V3.Sender.OrderItemController.cancel_multiple
       parameters:
         - name: ACCESS_TOKEN
@@ -13833,6 +14364,9 @@ paths:
           required: true
           schema:
             type: string
+      responses:
+        '200':
+          description: OK
   /api/v3/worker/worker_sequence:
     get:
       tags:
@@ -14041,6 +14575,9 @@ paths:
             schema:
               $ref: '#/components/schemas/DispatchRuleCreateRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: tasks
     delete:
       tags:
@@ -14099,13 +14636,17 @@ paths:
             schema:
               $ref: '#/components/schemas/DispatchRuleCreateRequest'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: tasks
   '/api/v3/enterprise/user/{id}/add_to_companies':
     post:
       tags:
         - '[Enterprise] User'
       summary: This endpoint adds an enterprise user to companies (as a dispatcher)
-      operationId: ApiWeb.V3.Enterprise.EnterpriseUserController.add_enterprise_user_to_companies
+      operationId: >-
+        ApiWeb.V3.Enterprise.EnterpriseUserController.add_enterprise_user_to_companies
       parameters:
         - name: ACCESS_TOKEN
           in: header
@@ -14156,7 +14697,7 @@ paths:
         required: false
       responses:
         '200':
-          description: Ok
+          description: OK
           content: {}
       x-codegen-request-body-name: options
   /api/v3/dispatcher/company/task_type_mappings:
@@ -14178,6 +14719,13 @@ paths:
           required: true
           schema:
             type: string
+        - name: id
+          in: query
+          description: Task type mapping id
+          required: true
+          schema:
+            type: integer
+          example: 1
       requestBody:
         description: Task type mapping information
         content:
@@ -14250,6 +14798,9 @@ paths:
         content:
           '*/*': {}
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: channel_id
   '/api/v3/dispatcher/track/{number}':
     get:
@@ -14363,7 +14914,7 @@ paths:
         required: false
       responses:
         '200':
-          description: Ok
+          description: OK
           content: {}
       x-codegen-request-body-name: role
     delete:
@@ -14429,7 +14980,7 @@ paths:
         required: false
       responses:
         '200':
-          description: Ok
+          description: OK
           content: {}
       x-codegen-request-body-name: role
   /api/v3/dispatcher/waybill_templates/versions:
@@ -14495,6 +15046,9 @@ paths:
             schema:
               $ref: '#/components/schemas/CompletionLocation'
         required: false
+      responses:
+        '200':
+          description: OK
       x-codegen-request-body-name: location
   '/api/v3/dispatcher/webhooks/{webhook_id}/webhook_logs':
     get:
@@ -14750,6 +15304,9 @@ paths:
           schema:
             type: integer
             default: 10
+      responses:
+        '200':
+          description: OK
   /api/v3/dispatcher/company/configuration:
     get:
       tags:
@@ -14817,7 +15374,9 @@ paths:
     get:
       tags:
         - '[Dispatcher] CorporateSender'
-      summary: This endpoint retrieves information about an Corporate (aka Organisation)
+      summary: >-
+        This endpoint retrieves information about an Corporate (aka
+        Organisation)
       operationId: ApiWeb.V3.Dispatcher.OrganisationController.show
       parameters:
         - name: ACCESS_TOKEN
@@ -15159,16 +15718,18 @@ components:
             - user_profile:
                 user_profile_id: 299
                 name: Demond Terry
-              inserted_at: '2018-10-23T07:57:27.538Z'
+              inserted_at: 2018-10-23T07:57:27.538Z
               incoming: false
               id: 133
-              created_at: '2018-10-23T07:56:00.000Z'
+              created_at: 2018-10-23T07:56:00.000Z
               content:
                 type: image
                 text: it has value if it is not attachment and it's type is 'text'
                 attachment:
-                  thumbnail: 'https://s3-ap-southeast-1.amazonaws.com/thumbnail_signature.png'
-                  original: 'https://s3-ap-southeast-1.amazonaws.com/original_signature.png'
+                  thumbnail: >-
+                    https://s3-ap-southeast-1.amazonaws.com/thumbnail_signature.png
+                  original: >-
+                    https://s3-ap-southeast-1.amazonaws.com/original_signature.png
           channel:
             members: []
             id: 154
@@ -15196,10 +15757,10 @@ components:
           limit_value: 2
           current_page: 1
         data:
-          - view_activities_requested_at: '2018-05-22T14:33:57.131Z'
-            view_activities_enabled_at: '2018-05-22T14:33:57.131Z'
+          - view_activities_requested_at: 2018-05-22T14:33:57.131Z
+            view_activities_enabled_at: 2018-05-22T14:33:57.131Z
             state: pending
-            requested_at: '2018-05-22T14:33:57.131Z'
+            requested_at: 2018-05-22T14:33:57.131Z
             postal_code: '321021'
             partnership_type: downstream
             country: Singapore
@@ -15220,7 +15781,7 @@ components:
           properties: {}
       example:
         data:
-          start_date: '2021-07-07T03:53:12.613Z'
+          start_date: 2021-07-07T03:53:12.613Z
           resolution_type: leg
           rate_calculations:
             - rate_calculation_index: 0
@@ -15393,7 +15954,7 @@ components:
           perspective_type: buy
           name: advanced
           load_type: ftl
-          inserted_at: '2021-07-07T03:53:12.613Z'
+          inserted_at: 2021-07-07T03:53:12.613Z
           company_id: 1
           active: true
     RateEntryRequest:
@@ -15416,7 +15977,7 @@ components:
           type: object
           properties: {}
       example:
-        start_date: '2021-07-07T03:53:12.613Z'
+        start_date: 2021-07-07T03:53:12.613Z
         resolution_type: leg
         rate_calculations:
           - rate_calculation_index: 0
@@ -15653,42 +16214,61 @@ components:
           type: array
       example:
         task_log:
-          - inserted_at: '2018-08-25T04:29:05.931Z'
+          - inserted_at: 2018-08-25T04:29:05.931Z
             event: task_completed
-            description: 'Pickup completed by Hau Vo Worker 2 (+84979202707) at Thai An 3 Apartments, Đường Nguyễn Văn Quá, Đông Hưng Thuận, District 12, Ho Chi Minh City, Vietnam, at N.A.'
-          - inserted_at: '2018-08-25T04:30:55.413Z'
+            description: >-
+              Pickup completed by Hau Vo Worker 2 (+84979202707) at Thai An 3
+              Apartments, Đường Nguyễn Văn Quá, Đông Hưng Thuận, District 12, Ho
+              Chi Minh City, Vietnam, at N.A.
+          - inserted_at: 2018-08-25T04:30:55.413Z
             event: task_completed
-            description: 'Dropoff completed by Hau Vo Worker 2 (+84979202707) at Nhà Hát Thành Phố, Bến Nghé, District 1, Ho Chi Minh City, Vietnam, at N.A.'
+            description: >-
+              Dropoff completed by Hau Vo Worker 2 (+84979202707) at Nhà Hát
+              Thành Phố, Bến Nghé, District 1, Ho Chi Minh City, Vietnam, at
+              N.A.
         task_group_log:
-          - inserted_at: '2018-08-25T04:25:16.467Z'
+          - inserted_at: 2018-08-25T04:25:16.467Z
             event: assign_worker
-            description: Item assigned to Hau Vo Worker 2 (+84979202707) by Yojee Development for SGD10.00
-          - inserted_at: '2018-08-25T04:25:21.716Z'
+            description: >-
+              Item assigned to Hau Vo Worker 2 (+84979202707) by Yojee
+              Development for SGD10.00
+          - inserted_at: 2018-08-25T04:25:21.716Z
             event: worker_accepted_task_group
             description: Item accepted by Hau Vo Worker 2 (+84979202707)
-          - inserted_at: '2018-08-25T04:30:55.453Z'
+          - inserted_at: 2018-08-25T04:30:55.453Z
             event: worker_completed_task_group
             description: Item completed by Hau Vo Worker 2 (+84979202707)
         order_log:
-          - inserted_at: '2018-08-25T04:24:44.583Z'
+          - inserted_at: 2018-08-25T04:24:44.583Z
             event: order_created
             description: Order created
-          - inserted_at: '2018-08-25T04:30:55.433Z'
+          - inserted_at: 2018-08-25T04:30:55.433Z
             event: order_completed
             description: Order completed
         order_item_log:
-          - inserted_at: '2018-08-25T04:25:21.695Z'
+          - inserted_at: 2018-08-25T04:25:21.695Z
             event: worker_accepted_item
-            description: 'Dropoff at Nhà hát thành phố, bến nghé, district 1, ho chi minh city, vietnam accepted by Hau Vo Worker 2 (+84979202707)'
-          - inserted_at: '2018-08-25T04:25:21.705Z'
+            description: >-
+              Dropoff at Nhà hát thành phố, bến nghé, district 1, ho chi minh
+              city, vietnam accepted by Hau Vo Worker 2 (+84979202707)
+          - inserted_at: 2018-08-25T04:25:21.705Z
             event: worker_accepted_item
-            description: 'Pickup at Thai an 3 apartments, đường nguyễn văn quá, đông hưng thuận, district 12, ho chi minh city, vietnam accepted by Hau Vo Worker 2 (+84979202707)'
-          - inserted_at: '2018-08-25T04:29:05.942Z'
+            description: >-
+              Pickup at Thai an 3 apartments, đường nguyễn văn quá, đông hưng
+              thuận, district 12, ho chi minh city, vietnam accepted by Hau Vo
+              Worker 2 (+84979202707)
+          - inserted_at: 2018-08-25T04:29:05.942Z
             event: pickup_completed
-            description: 'Pickup task completed by Hau Vo Worker 2 (+84979202707) at Thai An 3 Apartments, Đường Nguyễn Văn Quá, Đông Hưng Thuận, District 12, Ho Chi Minh City, Vietnam, at N.A.'
-          - inserted_at: '2018-08-25T04:30:55.436Z'
+            description: >-
+              Pickup task completed by Hau Vo Worker 2 (+84979202707) at Thai An
+              3 Apartments, Đường Nguyễn Văn Quá, Đông Hưng Thuận, District 12,
+              Ho Chi Minh City, Vietnam, at N.A.
+          - inserted_at: 2018-08-25T04:30:55.436Z
             event: dropoff_completed
-            description: 'Dropoff task completed by Hau Vo Worker 2 (+84979202707) at Nhà Hát Thành Phố, Bến Nghé, District 1, Ho Chi Minh City, Vietnam, at N.A.'
+            description: >-
+              Dropoff task completed by Hau Vo Worker 2 (+84979202707) at Nhà
+              Hát Thành Phố, Bến Nghé, District 1, Ho Chi Minh City, Vietnam, at
+              N.A.
     ScheduleRequest:
       title: Schedule Request
       type: object
@@ -15712,14 +16292,14 @@ components:
       example:
         worker_id: '1146'
         type: worker_on
-        start_event_datetime: '2020-05-23T01:45:00.000Z'
+        start_event_datetime: 2020-05-23T01:45:00.000Z
         recurrence_rule: |-
           DTSTART:20200523T014517Z
           RRULE:FREQ=DAILY
         priority: 0
         name: name schedule
-        end_repeat_datetime: '2020-06-23T02:45:00.000Z'
-        end_event_datetime: '2020-05-23T02:45:00.000Z'
+        end_repeat_datetime: 2020-06-23T02:45:00.000Z
+        end_event_datetime: 2020-05-23T02:45:00.000Z
     BulkActionsStatus:
       title: Bulk Actions Status
       type: object
@@ -15782,11 +16362,11 @@ components:
           current_page: 1
         data:
           - type: pickup
-            to: '2018-03-22T16:14:06.000Z'
+            to: 2018-03-22T16:14:06.000Z
             task_group_id: 2353
             sub_tasks: {}
             state: failed
-            start_time: '2018-03-22T16:14:06.000Z'
+            start_time: 2018-03-22T16:14:06.000Z
             service_type: sameday
             postal_code: '12345'
             position: 0
@@ -15803,7 +16383,7 @@ components:
               height: 1
               global_tracking_number: YOJ-UUXOUKPNPT0
             id: 551
-            from: '2018-03-22T15:14:06.000Z'
+            from: 2018-03-22T15:14:06.000Z
             external_id: '12345'
             external_customer_id3: '10644'
             external_customer_id2: '5854977'
@@ -15814,7 +16394,7 @@ components:
             contact:
               phone: 6581551123
               name: jens
-            completion_time: '2018-03-22T16:14:06.000Z'
+            completion_time: 2018-03-22T16:14:06.000Z
             all_tracking_numbers:
               - YOJ-NCTXAUNBPT0
               - YOJ-CXBWWVRNPT0
@@ -15833,10 +16413,10 @@ components:
         from:
           type: string
       example:
-        to: '2019-01-27T23:50:07.000Z'
+        to: 2019-01-27T23:50:07.000Z
         ployline_string: kjlfhsdklfhlksdhf
         id: '2'
-        from: '2017-01-27T23:50:07.000Z'
+        from: 2017-01-27T23:50:07.000Z
     RateEntriesResponse:
       title: RateEntries Response
       type: object
@@ -15845,7 +16425,7 @@ components:
           type: array
       example:
         data:
-          - start_date: '2021-07-07T03:53:12.613Z'
+          - start_date: 2021-07-07T03:53:12.613Z
             resolution_type: leg
             rate_calculations:
               - rate_calculation_index: 0
@@ -16018,7 +16598,7 @@ components:
             perspective_type: buy
             name: advanced
             load_type: ftl
-            inserted_at: '2021-07-07T03:53:12.613Z'
+            inserted_at: 2021-07-07T03:53:12.613Z
             company_id: 1
             active: true
     TaskMetaResponse:
@@ -16029,14 +16609,14 @@ components:
           type: array
       example:
         data:
-          - start_of_day: '2019-03-02T16:00:00.000Z'
-            end_of_day: '2019-03-03T15:59:59.000Z'
+          - start_of_day: 2019-03-02T16:00:00.000Z
+            end_of_day: 2019-03-03T15:59:59.000Z
             count: 34
-          - start_of_day: '2019-03-12T16:00:00.000Z'
-            end_of_day: '2019-03-13T15:59:59.000Z'
+          - start_of_day: 2019-03-12T16:00:00.000Z
+            end_of_day: 2019-03-13T15:59:59.000Z
             count: 34
-          - start_of_day: '2019-12-23T16:00:00.000Z'
-            end_of_day: '2019-12-24T15:59:59.000Z'
+          - start_of_day: 2019-12-23T16:00:00.000Z
+            end_of_day: 2019-12-24T15:59:59.000Z
             count: 2
     CompaniesThemeResponse:
       title: Driver's companies Response
@@ -16049,19 +16629,24 @@ components:
       example:
         message: Got list of companies theme
         data:
-          - logo: 'https://yojee-uploads-dev.s3.amazonaws.com/uploads/companies/467/logo/467_original_scharff.png?v=63689286187'
+          - logo: >-
+              https://yojee-uploads-dev.s3.amazonaws.com/uploads/companies/467/logo/467_original_scharff.png?v=63689286187
             company_slug: scharff
             brand_color: '#FF7177'
-          - logo: 'https://s3-ap-southeast-1.amazonaws.com/yojee-public/order_logo.jpg'
+          - logo: >-
+              https://s3-ap-southeast-1.amazonaws.com/yojee-public/order_logo.jpg
             company_slug: testcorp-r1
             brand_color: '#80c939'
-          - logo: 'https://s3-ap-southeast-1.amazonaws.com/yojee-public/order_logo.jpg'
+          - logo: >-
+              https://s3-ap-southeast-1.amazonaws.com/yojee-public/order_logo.jpg
             company_slug: ups
             brand_color: '#301506'
-          - logo: 'https://s3-ap-southeast-1.amazonaws.com/yojee-public/order_logo.jpg'
+          - logo: >-
+              https://s3-ap-southeast-1.amazonaws.com/yojee-public/order_logo.jpg
             company_slug: yojee
             brand_color: '#80c939'
-          - logo: 'https://yojee-uploads-demo.s3.amazonaws.com/uploads/companies/4/logo/4_original_TASMAN%20LOGO_330x60px.png?v=63692636534'
+          - logo: >-
+              https://yojee-uploads-demo.s3.amazonaws.com/uploads/companies/4/logo/4_original_TASMAN%20LOGO_330x60px.png?v=63692636534
             company_slug: tasman
             brand_color: '#054875'
           - logo: 'https://s3-ap-southeast-1.amazonaws.com/yojee-public/sila_logo.png'
@@ -16088,9 +16673,9 @@ components:
       example:
         tasks:
           - id: 12233
-            eta: '2018-08-20T16:00:00.000Z'
+            eta: 2018-08-20T16:00:00.000Z
           - id: 12234
-            eta: '2018-08-20T23:45:00.000Z'
+            eta: 2018-08-20T23:45:00.000Z
     DispatcherUpdateServiceTypeRequest:
       title: Dispatcher update service type request
       type: object
@@ -16258,7 +16843,7 @@ components:
             optimistic_estimated_duration: 40
             name: spoker
             modality: road
-            inserted_at: '2021-07-07T03:53:12.610Z'
+            inserted_at: 2021-07-07T03:53:12.610Z
             destination_hub_id: 2
             company_id: 1
     SpokeRequest:
@@ -16303,7 +16888,7 @@ components:
           optimistic_estimated_duration: 40
           name: spoker
           modality: road
-          inserted_at: '2021-07-07T03:53:12.610Z'
+          inserted_at: 2021-07-07T03:53:12.610Z
           destination_hub_id: 2
           company_id: 1
     StopsResponse:
@@ -16322,13 +16907,13 @@ components:
           limit_value: 10
           current_page: 1
         data:
-          - to: '2018-11-14T06:00:00.000Z'
+          - to: 2018-11-14T06:00:00.000Z
             postal_code: 68896
             order_number: O-D3VHSKDORDNM
             lng: 103.8209837
             lat: 1.2942236
             id: 3586
-            from: '2018-11-14T02:00:00.000Z'
+            from: 2018-11-14T02:00:00.000Z
             country: Singapore
             contact:
               phone: 6531591335
@@ -16365,19 +16950,19 @@ components:
       description: Get a list of booking slots
       example:
         '14:00-18:00':
-          - pickup_to: '2020-10-27T18:00:00.000Z'
-            pickup_from: '2020-10-27T14:00:00.000Z'
-            dropoff_to: '2020-10-27T22:00:00.000Z'
-            dropoff_from: '2020-10-27T18:00:00.000Z'
+          - pickup_to: 2020-10-27T18:00:00.000Z
+            pickup_from: 2020-10-27T14:00:00.000Z
+            dropoff_to: 2020-10-27T22:00:00.000Z
+            dropoff_from: 2020-10-27T18:00:00.000Z
         '10:00-14:00':
-          - pickup_to: '2020-10-27T14:00:00.000Z'
-            pickup_from: '2020-10-27T10:00:00.000Z'
-            dropoff_to: '2020-10-27T18:00:00.000Z'
-            dropoff_from: '2020-10-27T14:00:00.000Z'
-          - pickup_to: '2020-10-27T14:00:00.000Z'
-            pickup_from: '2020-10-27T10:00:00.000Z'
-            dropoff_to: '2020-10-27T22:00:00.000Z'
-            dropoff_from: '2020-10-27T18:00:00.000Z'
+          - pickup_to: 2020-10-27T14:00:00.000Z
+            pickup_from: 2020-10-27T10:00:00.000Z
+            dropoff_to: 2020-10-27T18:00:00.000Z
+            dropoff_from: 2020-10-27T14:00:00.000Z
+          - pickup_to: 2020-10-27T14:00:00.000Z
+            pickup_from: 2020-10-27T10:00:00.000Z
+            dropoff_to: 2020-10-27T22:00:00.000Z
+            dropoff_from: 2020-10-27T18:00:00.000Z
     BulkCompletionStatus:
       title: Bulk Completion Status
       type: object
@@ -16427,8 +17012,8 @@ components:
           service_type: same_day
           price: SGD 10
           pickup:
-            time_to: '2018-07-18T12:04:24.205Z'
-            time_from: '2018-07-18T04:04:24.205Z'
+            time_to: 2018-07-18T12:04:24.205Z
+            time_from: 2018-07-18T04:04:24.205Z
             task_id: 65584
             state: Singapore
             postal_code: '112233'
@@ -16454,8 +17039,8 @@ components:
           external_customer_id: external_customer_id_test
           editable: false
           dropoff:
-            time_to: '2018-07-18T20:04:24.205Z'
-            time_from: '2018-07-18T12:04:24.205Z'
+            time_to: 2018-07-18T20:04:24.205Z
+            time_from: 2018-07-18T12:04:24.205Z
             task_id: 65585
             state: Singapore
             postal_code: '332211'
@@ -16476,7 +17061,7 @@ components:
             log:
               - type: worker_accepted_task_group
                 logs:
-                  - inserted_at: '2018-07-18T04:04:24.256Z'
+                  - inserted_at: 2018-07-18T04:04:24.256Z
                     description: Item accepted by Mrs. Antone Krajcik (07618671299)
     OrderItemsUpdateRequest:
       title: Order Item Update Request
@@ -16532,12 +17117,12 @@ components:
         external_customer_id2: changed_external_customer_id2
         external_customer_id: changed_external_customer_id
         dropoff:
-          to_time: '2021-07-08T03:53:12.605Z'
+          to_time: 2021-07-08T03:53:12.605Z
           state: Singapore
           postal_code: '332211'
           lng: 103.8469761
           lat: 1.2880209
-          from_time: '2021-07-07T19:53:12.605Z'
+          from_time: 2021-07-07T19:53:12.605Z
           country: Singapore
           contact_phone: 6581551123
           contact_name: vivek
@@ -16565,7 +17150,7 @@ components:
             phone: 8412345611
             password: Password1!
             name: Sender
-            inserted_at: '2021-07-07T03:53:12.608Z'
+            inserted_at: 2021-07-07T03:53:12.608Z
             id: 5
             email: contact@test.com
             billing_address: 80 Robinson Road
@@ -16606,7 +17191,7 @@ components:
           phone: 8412345611
           password: Password1!
           name: Sender
-          inserted_at: '2021-07-07T03:53:12.607Z'
+          inserted_at: 2021-07-07T03:53:12.607Z
           id: 5
           email: contact@test.com
           billing_address: 80 Robinson Road
@@ -16648,10 +17233,10 @@ components:
           type: integer
       example:
         url: 'https://cuong.free.beeceptor.com'
-        updated_at: '2018-10-23T07:57:27.538Z'
+        updated_at: 2018-10-23T07:57:27.538Z
         status: active
         secret_token: AA-BB-CC
-        inserted_at: '2018-10-23T07:57:27.538Z'
+        inserted_at: 2018-10-23T07:57:27.538Z
         events:
           - sender.created
           - payment.completed
@@ -16686,13 +17271,13 @@ components:
                 location:
                   lng: 122.6428429677108
                   lat: 65.67691234535297
-                completion_time: '2018-03-10T03:37:08.000Z'
+                completion_time: 2018-03-10T03:37:08.000Z
                 comment: Second task comment
               '315':
                 location:
                   lng: 122.6428429677108
                   lat: 65.67691234535297
-                completion_time: '2018-03-10T03:37:08.000Z'
+                completion_time: 2018-03-10T03:37:08.000Z
                 comment: this is a comment for complete a task
             id: random_hash
           - type: complete
@@ -16704,13 +17289,13 @@ components:
                 location:
                   lng: 122.6428429677108
                   lat: 65.67691234535297
-                completion_time: '2018-03-11T03:37:08.000Z'
+                completion_time: 2018-03-11T03:37:08.000Z
                 comment: Second task comment
               '316':
                 location:
                   lng: 122.6428429677108
                   lat: 65.67691234535297
-                completion_time: '2018-03-11T03:37:08.000Z'
+                completion_time: 2018-03-11T03:37:08.000Z
                 comment: this is a comment for complete a task
             id: random_hash_2
     OrderItemsIndexResponse:
@@ -16741,7 +17326,7 @@ components:
             price_info: 'Base price: 10'
             distance: 1664
             from_lng: 103.8492068
-            created_at: '2020-08-20T03:51:13.359Z'
+            created_at: 2020-08-20T03:51:13.359Z
             from_address: 80 Robinson Road
             status: created
             order_id: 8
@@ -16774,10 +17359,10 @@ components:
           current_page: 1
         data:
           - url: 'https://cuong.free.beeceptor.com'
-            updated_at: '2018-10-23T07:57:27.538Z'
+            updated_at: 2018-10-23T07:57:27.538Z
             status: active
             secret_token: AA-BB-CC
-            inserted_at: '2018-10-23T07:57:27.538Z'
+            inserted_at: 2018-10-23T07:57:27.538Z
             events:
               - sender.created
               - payment.completed
@@ -16809,7 +17394,7 @@ components:
           - user_profile: 1
             phone: 987654330
             name: Dispatcher
-            inserted_at: '2021-07-07T03:53:12.606Z'
+            inserted_at: 2021-07-07T03:53:12.606Z
             email: contact@test.com
             company_id: 1
     DispatcherCreateUserRequest:
@@ -16846,7 +17431,7 @@ components:
           user_profile: 1
           phone: 987654330
           name: Dispatcher
-          inserted_at: '2021-07-07T03:53:12.606Z'
+          inserted_at: 2021-07-07T03:53:12.606Z
           email: contact@test.com
           company_id: 1
     DispatcherWorkersResponse:
@@ -16881,17 +17466,21 @@ components:
             phone: 987654322
             password: Password1!
             otp_token: '1122334455'
-            national_id_photo_front: 'https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/national_id/128817_original_updated-national-id-front.png'
-            national_id_photo_back: 'https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/national_id/128817_original_updated-national-id-back.png'
+            national_id_photo_front: >-
+              https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/national_id/128817_original_updated-national-id-front.png
+            national_id_photo_back: >-
+              https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/national_id/128817_original_updated-national-id-back.png
             national_id: '11335577'
             name: Driver
             location:
               lng: 122.6428429677108
               lat: 65.67691234535297
-            inserted_at: '2021-07-07T03:53:12.608Z'
+            inserted_at: 2021-07-07T03:53:12.608Z
             email: contact@test.com
-            driver_license_photo_front: 'https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/driver_license/128817_original_updated-driver-license-front.png?v=63701553117'
-            driver_license_photo_back: 'https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/driver_license/128817_original_updated-driver-license-back.png?v=63701553117'
+            driver_license_photo_front: >-
+              https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/driver_license/128817_original_updated-driver-license-front.png?v=63701553117
+            driver_license_photo_back: >-
+              https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/driver_license/128817_original_updated-driver-license-back.png?v=63701553117
             driver_license: '22446688'
             distance_away: 1100
             current_vehicle_type_id: 1
@@ -16977,17 +17566,21 @@ components:
           phone: 987654322
           password: Password1!
           otp_token: '1122334455'
-          national_id_photo_front: 'https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/national_id/128817_original_updated-national-id-front.png'
-          national_id_photo_back: 'https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/national_id/128817_original_updated-national-id-back.png'
+          national_id_photo_front: >-
+            https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/national_id/128817_original_updated-national-id-front.png
+          national_id_photo_back: >-
+            https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/national_id/128817_original_updated-national-id-back.png
           national_id: '11335577'
           name: Driver
           location:
             lng: 122.6428429677108
             lat: 65.67691234535297
-          inserted_at: '2021-07-07T03:53:12.607Z'
+          inserted_at: 2021-07-07T03:53:12.607Z
           email: contact@test.com
-          driver_license_photo_front: 'https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/driver_license/128817_original_updated-driver-license-front.png?v=63701553117'
-          driver_license_photo_back: 'https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/driver_license/128817_original_updated-driver-license-back.png?v=63701553117'
+          driver_license_photo_front: >-
+            https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/driver_license/128817_original_updated-driver-license-front.png?v=63701553117
+          driver_license_photo_back: >-
+            https://yojee-uploads-demo.s3.amazonaws.com/uploads/accounts/128817/driver_license/128817_original_updated-driver-license-back.png?v=63701553117
           driver_license: '22446688'
           distance_away: 1100
           current_vehicle_type_id: 1
@@ -17025,7 +17618,7 @@ components:
         location:
           lng: 122.6428429677108
           lat: 65.67691234535297
-        completion_time: '2018-03-10T03:37:08.000Z'
+        completion_time: 2018-03-10T03:37:08.000Z
         comment: this is a comment for complete a task
     CreatePaymentRequest:
       title: CreatePaymentRequest
@@ -17263,13 +17856,13 @@ components:
             state: unassigned
             order_steps:
               - type: pickup
-                to_time: '2018-07-18T17:57:06.698Z'
+                to_time: 2018-07-18T17:57:06.698Z
                 sequence: 1
                 lng: 103.7647132
                 lat: 1.4630478
                 item_count: 1
                 id: 65254
-                from_time: '2018-07-18T09:57:06.698Z'
+                from_time: 2018-07-18T09:57:06.698Z
                 first_item:
                   width: 1
                   tracking_number: YOJ-C3JHBZLRPT0
@@ -17292,15 +17885,17 @@ components:
                   country: Singapore
                   address2: 160 Robinson Road
                   address: 80 Robinson Road
-                address: '80 Robinson Road, 160 Robinson Road, Singapore, 112233, Singapore'
+                address: >-
+                  80 Robinson Road, 160 Robinson Road, Singapore, 112233,
+                  Singapore
               - type: dropoff
-                to_time: '2018-07-19T01:57:06.698Z'
+                to_time: 2018-07-19T01:57:06.698Z
                 sequence: 2
                 lng: 103.7647132
                 lat: 1.4630478
                 item_count: 1
                 id: 65255
-                from_time: '2018-07-18T17:57:06.698Z'
+                from_time: 2018-07-18T17:57:06.698Z
                 first_item:
                   width: 1
                   tracking_number: YOJ-C3JHBZLRPT0
@@ -17326,7 +17921,7 @@ components:
                 address: 'Boon Keng Rd, 50 Boon Keng Rd, Singapore, 332211, Singapore'
             id: 43770
     SenderCreateOrderRequest:
-      description: ''
+      title: '[Sender] Create Order Request'
       type: object
       properties:
         steps:
@@ -17364,7 +17959,7 @@ components:
                 type: number
               from_time:
                 type: string
-                minLength: 1
+                format: date
               country:
                 type: string
                 minLength: 1
@@ -17482,75 +18077,65 @@ components:
         container_no:
           type: string
           minLength: 1
-      required:
-        - steps
-        - sender_type
-        - sender_id
-        - price_currency
-        - price_amount
-        - items
-        - item_steps
-        - external_id
-        - container_no
-      x-examples:
-        example-1:
-          steps:
-            - to_time: '2021-07-07T19:53:12.580Z'
-              state: Singapore
-              postal_code: '112233'
-              lng: 103.7647132
-              lat: 1.4630478
-              from_time: '2021-07-07T11:53:12.580Z'
-              country: sg
-              contact_phone: 6581551123
-              contact_name: vivek
-              contact_email: sender@example.com
-              contact_company: Adidas
-              address2: 160 Robinson Road
-              address: 80 Robinson Road
-            - to_time: '2021-07-08T03:53:12.580Z'
-              state: Singapore
-              postal_code: '332211'
-              lng: 103.7647132
-              lat: 1.4630478
-              from_time: '2021-07-07T19:53:12.580Z'
-              country: Singapore
-              contact_phone: 6581551123
-              contact_name: vivek
-              contact_email: recipient@example.com
-              contact_company: Nike
-              address2: 50 Boon Keng Rd
-              address: Boon Keng Rd
-          sender_type: organisation
-          sender_id: 1
-          price_currency: SGD
-          price_amount: 10
-          items:
-            - width: 1
-              weight: 1
-              volumetric_weight: 10
-              volume: 200
-              service_type: same_day
-              quantity: 2
-              price_info: Surcharge 2.00
-              price_amount: '10.00'
-              payload_type: Package
-              length: 1
-              info: info_test
-              height: 1
-              external_customer_id3: external_customer_id3_test
-              external_customer_id2: external_customer_id2_test
-              external_customer_id: external_customer_id_test
-              description: Gift
-          item_steps:
-            - type: pickup
-              order_step_id: 0
-              item_id: 0
-            - type: dropoff
-              order_step_id: 1
-              item_id: 0
-          external_id: 'External test #1'
-          container_no: 'Container test #1'
+      description: POST body for sender to create an order
+      example:
+        steps:
+          - to_time: 2021-07-07T19:53:12.580Z
+            state: Singapore
+            postal_code: '112233'
+            lng: 103.7647132
+            lat: 1.4630478
+            from_time: 2021-07-07T11:53:12.580Z
+            country: sg
+            contact_phone: 6581551123
+            contact_name: vivek
+            contact_email: sender@example.com
+            contact_company: Adidas
+            address2: 160 Robinson Road
+            address: 80 Robinson Road
+          - to_time: 2021-07-08T03:53:12.580Z
+            state: Singapore
+            postal_code: '332211'
+            lng: 103.7647132
+            lat: 1.4630478
+            from_time: 2021-07-07T19:53:12.580Z
+            country: Singapore
+            contact_phone: 6581551123
+            contact_name: vivek
+            contact_email: recipient@example.com
+            contact_company: Nike
+            address2: 50 Boon Keng Rd
+            address: Boon Keng Rd
+        sender_type: organisation
+        sender_id: 1
+        price_currency: SGD
+        price_amount: 10
+        items:
+          - width: 1
+            weight: 1
+            volumetric_weight: 10
+            volume: 200
+            service_type: same_day
+            quantity: 2
+            price_info: Surcharge 2.00
+            price_amount: '10.00'
+            payload_type: Package
+            length: 1
+            info: info_test
+            height: 1
+            external_customer_id3: external_customer_id3_test
+            external_customer_id2: external_customer_id2_test
+            external_customer_id: external_customer_id_test
+            description: Gift
+        item_steps:
+          - type: pickup
+            order_step_id: 0
+            item_id: 0
+          - type: dropoff
+            order_step_id: 1
+            item_id: 0
+        external_id: 'External test #1'
+        container_no: 'Container test #1'
     SenderCreateOrderResponse:
       title: '[Sender] CreateOrderResponse'
       type: object
@@ -17585,7 +18170,7 @@ components:
         data:
           - type: operational
             tag: poly5
-            inserted_at: '2021-07-07T03:53:12.610Z'
+            inserted_at: 2021-07-07T03:53:12.610Z
             description: Sample Region
             coordinates:
               - - lng: 10
@@ -17621,14 +18206,14 @@ components:
           - worker_name: Ralston
             worker_id: 345
             status: scheduled
-            start_time: '2018-08-20T23:45:00.000Z'
+            start_time: 2018-08-20T23:45:00.000Z
             start_location:
               lng: 102.3211
               lat: 1.23445
             start_address: '80 Robinson Road, Singapore'
             name: Trip on Dec 14
             id: 17834
-            end_time: '2018-08-21T23:45:00.000Z'
+            end_time: 2018-08-21T23:45:00.000Z
             end_location:
               lng: 102.3211
               lat: 1.23445
@@ -17640,15 +18225,15 @@ components:
         vehicle_type_id: 3
         tasks:
           - id: startFromDepot
-            eta: '2018-08-20T16:00:00.000Z'
+            eta: 2018-08-20T16:00:00.000Z
           - polyline:
               - - 103.96689
                 - 1.330653
               - - 103.96689
                 - 1.330653
             id: '46'
-            eta: '2018-08-20T23:45:00.000Z'
-        start_time: '2018-08-20T23:45:00.000Z'
+            eta: 2018-08-20T23:45:00.000Z
+        start_time: 2018-08-20T23:45:00.000Z
         start_location:
           lng: 102.3211
           lat: 1.23445
@@ -17663,7 +18248,7 @@ components:
           - - 103.96689
             - 1.330653
         name: Trip on Dec 14
-        end_time: '2018-08-21T23:45:00.000Z'
+        end_time: 2018-08-21T23:45:00.000Z
         end_location:
           lng: 102.3211
           lat: 1.23445
@@ -17734,10 +18319,10 @@ components:
           type: string
       example:
         type: pickup
-        to: '2018-03-27T10:00:00.000Z'
+        to: 2018-03-27T10:00:00.000Z
         task_group_id: 4213
         state: created
-        start_time: '2018-03-27T10:00:00.000Z'
+        start_time: 2018-03-27T10:00:00.000Z
         service_type: next_day
         price: SGD 10
         postal_code: '84184'
@@ -17794,12 +18379,12 @@ components:
           - user_profile_id: 3499
             phone: 84378909987
             name: Nam
-            inserted_at: '2019-12-09T02:51:25.411Z'
+            inserted_at: 2019-12-09T02:51:25.411Z
             id: 1027
           - user_profile_id: 3500
             phone: 84378909981
             name: Nam Hoang
-            inserted_at: '2019-12-09T02:51:25.831Z'
+            inserted_at: 2019-12-09T02:51:25.831Z
             id: 1028
     DispatcherCreateMultipleWorkersErrorResponse:
       title: Create Multiple worker Error Response
@@ -17884,7 +18469,7 @@ components:
         event: pickup_completed
         completion_data:
           recipient_name: recipient
-          arrival_time: '2018-03-10T03:37:08.000Z'
+          arrival_time: 2018-03-10T03:37:08.000Z
         action: upload_photo
     SubTaskResponse:
       title: Dispatcher SubTask Response
@@ -17919,7 +18504,7 @@ components:
           photo_title: Signature
         id: 21
         event: pickup_completed
-        completion_time: '2018-03-10T03:37:08.000Z'
+        completion_time: 2018-03-10T03:37:08.000Z
         company_id: 136
         action: upload_photo
     QuickAssignRequest:
@@ -17989,8 +18574,8 @@ components:
           properties: {}
       example:
         data:
-          slug: '2021-07-07T03:53:12.610Z'
-          shortcode: '2021-07-07T03:53:12.610Z'
+          slug: 2021-07-07T03:53:12.610Z
+          shortcode: 2021-07-07T03:53:12.610Z
           regions:
             - poly5
           properties:
@@ -18000,7 +18585,7 @@ components:
           location:
             lng: 103.7647132
             lat: 1.4630478
-          inserted_at: '2021-07-07T03:53:12.610Z'
+          inserted_at: 2021-07-07T03:53:12.610Z
           company_id: 1
           address_item:
             tags: []
@@ -18037,8 +18622,8 @@ components:
           type: object
           properties: {}
       example:
-        slug: '2021-07-07T03:53:12.610Z'
-        shortcode: '2021-07-07T03:53:12.610Z'
+        slug: 2021-07-07T03:53:12.610Z
+        shortcode: 2021-07-07T03:53:12.610Z
         regions:
           - poly5
         properties:
@@ -18144,27 +18729,27 @@ components:
           consolidations:
             - quantity: 12
               order_item_id: 9890
-              deconsolidated_at: '2019-09-24T10:43:56.899Z'
+              deconsolidated_at: 2019-09-24T10:43:56.899Z
               deconsolidated: true
               consolidations:
                 - quantity: 10
                   order_item_id: 9905
-                  deconsolidated_at: '2019-09-24T10:43:56.899Z'
+                  deconsolidated_at: 2019-09-24T10:43:56.899Z
                   deconsolidated: true
                   consolidations:
                     - quantity: 5
                       order_item_id: 7307
-                      deconsolidated_at: '2019-09-24T10:43:56.899Z'
+                      deconsolidated_at: 2019-09-24T10:43:56.899Z
                       deconsolidated: true
                       consolidations: []
-                      consolidated_at: '2019-09-23T10:43:56.899Z'
+                      consolidated_at: 2019-09-23T10:43:56.899Z
                     - quantity: 7
                       order_item_id: 9878
                       deconsolidated: false
                       consolidations: []
-                      consolidated_at: '2019-09-23T10:43:56.899Z'
-                  consolidated_at: '2019-09-23T10:43:56.899Z'
-              consolidated_at: '2019-09-23T10:43:56.899Z'
+                      consolidated_at: 2019-09-23T10:43:56.899Z
+                  consolidated_at: 2019-09-23T10:43:56.899Z
+              consolidated_at: 2019-09-23T10:43:56.899Z
     DispatcherUpdateUserRequest:
       title: User Update Request
       required:
@@ -18362,7 +18947,7 @@ components:
         status: sent
         price: SGD 500
         id: 1
-        expires_at: '2018-05-28T08:45:38.632Z'
+        expires_at: 2018-05-28T08:45:38.632Z
     AllocationRequest:
       title: Allocation Request
       type: object
@@ -18371,14 +18956,14 @@ components:
           - worker_id: 2
             tasks:
               - id: startFromDepot
-                eta: '2018-08-20T16:00:00.000Z'
+                eta: 2018-08-20T16:00:00.000Z
               - polyline:
                   - - 103.96689
                     - 1.330653
                   - - 103.96689
                     - 1.330653
                 id: '46'
-                eta: '2018-08-20T23:45:00.000Z'
+                eta: 2018-08-20T23:45:00.000Z
             polyline:
               - - 103.96689
                 - 1.330653
@@ -18392,14 +18977,14 @@ components:
           - worker_id: 232
             tasks:
               - id: startFromDepot
-                eta: '2018-08-20T16:00:00.000Z'
+                eta: 2018-08-20T16:00:00.000Z
               - polyline:
                   - - 103.96689
                     - 1.330653
                   - - 103.96689
                     - 1.330653
                 id: '1223'
-                eta: '2018-08-20T23:45:00.000Z'
+                eta: 2018-08-20T23:45:00.000Z
             polyline:
               - - 103.96689
                 - 1.330653
@@ -18416,8 +19001,8 @@ components:
           type: array
       example:
         data:
-          - slug: '2021-07-07T03:53:12.610Z'
-            shortcode: '2021-07-07T03:53:12.610Z'
+          - slug: 2021-07-07T03:53:12.610Z
+            shortcode: 2021-07-07T03:53:12.610Z
             regions:
               - poly5
             properties:
@@ -18427,7 +19012,7 @@ components:
             location:
               lng: 103.7647132
               lat: 1.4630478
-            inserted_at: '2021-07-07T03:53:12.610Z'
+            inserted_at: 2021-07-07T03:53:12.610Z
             company_id: 1
             address_item:
               tags: []
@@ -18514,16 +19099,18 @@ components:
             - user_profile:
                 user_profile_id: 299
                 name: Demond Terry
-              inserted_at: '2018-10-23T07:57:27.538Z'
+              inserted_at: 2018-10-23T07:57:27.538Z
               incoming: false
               id: 133
-              created_at: '2018-10-23T07:56:00.000Z'
+              created_at: 2018-10-23T07:56:00.000Z
               content:
                 type: image
                 text: it has value if it is not attachment and it's type is 'text'
                 attachment:
-                  thumbnail: 'https://s3-ap-southeast-1.amazonaws.com/thumbnail_signature.png'
-                  original: 'https://s3-ap-southeast-1.amazonaws.com/original_signature.png'
+                  thumbnail: >-
+                    https://s3-ap-southeast-1.amazonaws.com/thumbnail_signature.png
+                  original: >-
+                    https://s3-ap-southeast-1.amazonaws.com/original_signature.png
           channel:
             members: []
             id: 154
@@ -18543,9 +19130,9 @@ components:
                 service_type: sameday
                 order_item_steps:
                   - type: pickup
-                    to_time: '2019-05-07T01:48:14.000Z'
+                    to_time: 2019-05-07T01:48:14.000Z
                     state: created
-                    from_time: '2019-05-06T17:48:14.000Z'
+                    from_time: 2019-05-06T17:48:14.000Z
                     contact_phone: 6581551123
                     contact_name: vivek
                     contact_email: sender@example.com
@@ -18561,9 +19148,9 @@ components:
                       address: 80 Robinson Road
                     address: 80 Robinson Road
                   - type: dropoff
-                    to_time: '2019-05-07T09:48:14.000Z'
+                    to_time: 2019-05-07T09:48:14.000Z
                     state: created
-                    from_time: '2019-05-07T01:48:14.000Z'
+                    from_time: 2019-05-07T01:48:14.000Z
                     contact_phone: 6581551123
                     contact_name: vivek
                     contact_email: recipient@example.com
@@ -18579,12 +19166,16 @@ components:
                       address: Boon Keng Rd
                     address: Boon Keng Rd
                 order_item_logs:
-                  - inserted_at: '2019-05-06T09:48:16.854Z'
+                  - inserted_at: 2019-05-06T09:48:16.854Z
                     event: worker_accepted_item
-                    description: Dropoff at Boon keng rd accepted by Ludwig Graham (+447584471927)
-                  - inserted_at: '2019-05-06T09:48:16.856Z'
+                    description: >-
+                      Dropoff at Boon keng rd accepted by Ludwig Graham
+                      (+447584471927)
+                  - inserted_at: 2019-05-06T09:48:16.856Z
                     event: worker_accepted_item
-                    description: Pickup at 80 robinson road accepted by Ludwig Graham (+447584471927)
+                    description: >-
+                      Pickup at 80 robinson road accepted by Ludwig Graham
+                      (+447584471927)
                 item_id: 53417
                 item:
                   width: 1
@@ -18593,7 +19184,7 @@ components:
                   length: 1
                   id: 53417
                   height: 1
-            inserted_at: '2018-03-20T15:18:38.613Z'
+            inserted_at: 2018-03-20T15:18:38.613Z
     DispatcherSubTasksResponse:
       title: Dispatcher Sub Tasks Response
       type: object
@@ -18616,7 +19207,7 @@ components:
               photo_title: Signature
             id: 21
             event: pickup_completed
-            completion_time: '2018-03-10T03:37:08.000Z'
+            completion_time: 2018-03-10T03:37:08.000Z
             company_id: 136
             action: upload_photo
     CompanyServiceTypesResponse:
@@ -18993,10 +19584,10 @@ components:
         user_profile:
           user_profile_id: 299
           name: Demond Terry
-        inserted_at: '2018-10-23T07:57:27.538Z'
+        inserted_at: 2018-10-23T07:57:27.538Z
         incoming: false
         id: 133
-        created_at: '2018-10-23T07:56:00.000Z'
+        created_at: 2018-10-23T07:56:00.000Z
         content:
           type: image
           text: it has value if it is not attachment and it's type is 'text'
@@ -19077,12 +19668,12 @@ components:
         data:
           - user_profile_id: 3499
             name: Nam
-            inserted_at: '2019-12-09T02:51:25.411Z'
+            inserted_at: 2019-12-09T02:51:25.411Z
             id: 1027
             email: nam@abc.com
           - user_profile_id: 3500
             name: Nam Hoang
-            inserted_at: '2019-12-09T02:51:25.831Z'
+            inserted_at: 2019-12-09T02:51:25.831Z
             id: 1028
             email: nam@abcd.com
     DispatcherCreateMultipleUsersErrorResponse:
@@ -19106,7 +19697,8 @@ components:
           type: object
           properties: {}
       example:
-        data: 'https://s3.us-east-1.amazonaws.com/test/uploads/companies/334/334_logo.png'
+        data: >-
+          https://s3.us-east-1.amazonaws.com/test/uploads/companies/334/334_logo.png
     SenderSearchRouteScheduleResponse:
       title: Search Route Schedules Response
       type: object
@@ -19124,9 +19716,9 @@ components:
                   lat: 1
                 id: 1
                 duration: 1800
-                departure_datetime: '2019-07-30T03:00:00.000Z'
+                departure_datetime: 2019-07-30T03:00:00.000Z
                 day_offset: 0
-                arrival_datetime: '2019-07-30T03:30:34.000Z'
+                arrival_datetime: 2019-07-30T03:30:34.000Z
                 address_item_id: 1
                 address: 80 Robinson Road
             name: test
@@ -19139,7 +19731,7 @@ components:
         worker_name: Ralston
         worker_id: 345
         status: scheduled
-        start_time: '2018-08-20T23:45:00.000Z'
+        start_time: 2018-08-20T23:45:00.000Z
         start_location:
           lng: 102.3211
           lat: 1.23445
@@ -19155,7 +19747,7 @@ components:
             - 1.330653
         name: Trip on Dec 14
         id: 17834
-        end_time: '2018-08-21T23:45:00.000Z'
+        end_time: 2018-08-21T23:45:00.000Z
         end_location:
           lng: 102.3211
           lat: 1.23445
@@ -19222,13 +19814,13 @@ components:
           - user_profile_id: 3499
             sender_type: individual
             name: Nam
-            inserted_at: '2019-12-09T02:51:25.411Z'
+            inserted_at: 2019-12-09T02:51:25.411Z
             id: 1027
             email: nam@abc.com
           - user_profile_id: 3500
             sender_type: individual
             name: Nam Hoang
-            inserted_at: '2019-12-09T02:51:25.831Z'
+            inserted_at: 2019-12-09T02:51:25.831Z
             id: 1028
             email: nam@abcd.com
     DispatcherCreateMultipleSendersErrorResponse:
@@ -19312,19 +19904,19 @@ components:
       example:
         data:
           - name: main
-            inserted_at: '2021-07-07T03:53:12.613Z'
+            inserted_at: 2021-07-07T03:53:12.613Z
             description: Base Freight
             code: BFC
           - name: handling
-            inserted_at: '2021-07-07T03:53:12.613Z'
+            inserted_at: 2021-07-07T03:53:12.613Z
             description: Handling Charges
             code: HC
           - name: fuel
-            inserted_at: '2021-07-07T03:53:12.613Z'
+            inserted_at: 2021-07-07T03:53:12.613Z
             description: Fuel Charges
             code: FCC
           - name: gst
-            inserted_at: '2021-07-07T03:53:12.613Z'
+            inserted_at: 2021-07-07T03:53:12.613Z
             description: GST
             code: GST
     RateChargeTypesRequest:
@@ -19363,13 +19955,13 @@ components:
           limit_value: 10
           current_page: 1
         data:
-          - to: '2018-11-14T06:00:00.000Z'
+          - to: 2018-11-14T06:00:00.000Z
             postal_code: 68896
             order_number: O-D3VHSKDORDNM
             lng: 103.8209837
             lat: 1.2942236
             id: 3586
-            from: '2018-11-14T02:00:00.000Z'
+            from: 2018-11-14T02:00:00.000Z
             country: Singapore
             contact:
               phone: 6531591335
@@ -19486,12 +20078,12 @@ components:
         items:
           - steps:
               - type: pickup
-                to_time: '2019-12-11T07:00:00.000Z'
+                to_time: 2019-12-11T07:00:00.000Z
                 state: ''
                 postal_code: 39803
                 lng: 103.8631368
                 lat: 1.2892988
-                from_time: '2019-12-11T03:00:00.000Z'
+                from_time: 2019-12-11T03:00:00.000Z
                 country: Singapore
                 contact_phone: 652
                 contact_name: yojee contact name
@@ -19501,12 +20093,12 @@ components:
                 address2: address2 singapore
                 address: 'Raffles Avenue, Singapore Flyer, Singapore'
               - type: dropoff
-                to_time: '2019-12-11T11:00:00.000Z'
+                to_time: 2019-12-11T11:00:00.000Z
                 state: ''
                 postal_code: '486150'
                 lng: 103.95953699999995
                 lat: 1.3335251
-                from_time: '2019-12-11T07:00:00.000Z'
+                from_time: 2019-12-11T07:00:00.000Z
                 country: Singapore
                 contact_phone: 651265434656
                 contact_name: yojee dropoff
@@ -19597,10 +20189,10 @@ components:
         user_profile:
           user_profile_id: 299
           name: Demond Terry
-        inserted_at: '2018-10-23T07:57:27.538Z'
+        inserted_at: 2018-10-23T07:57:27.538Z
         incoming: false
         id: 133
-        created_at: '2018-10-23T07:56:00.000Z'
+        created_at: 2018-10-23T07:56:00.000Z
         content:
           type: image
           text: it has value if it is not attachment and it's type is 'text'
@@ -19635,9 +20227,9 @@ components:
                 length: 53
                 height: 53
                 description: ''
-              inserted_at: '2018-03-08T08:45:38.632Z'
+              inserted_at: 2018-03-08T08:45:38.632Z
           number: Z1QxNVRKUWwvKzUzc00wUkJEeXZUUT09
-          inserted_at: '2021-07-07T03:53:12.604Z'
+          inserted_at: 2021-07-07T03:53:12.604Z
           access_token: 4h/PrR5vu9uVevso3fNv2RPTLQJech3BJ/pNJhWBnfE=
     DispatcherUpdateOrderRequest:
       title: DispatcherUpdateOrderRequest
@@ -19674,7 +20266,7 @@ components:
             - tracking_number: YOJ-YLPLJ4BDRHQW
               id: 4
           number: O-ZDEQXQXLKNY1
-          inserted_at: '2019-09-16T03:41:40.455Z'
+          inserted_at: 2019-09-16T03:41:40.455Z
           id: 5
           display_price: SGD 0
     DispatcherIndexRoleResponse:
@@ -19686,7 +20278,7 @@ components:
       example:
         data:
           - name: role_1
-            inserted_at: '2021-07-07T03:53:12.609Z'
+            inserted_at: 2021-07-07T03:53:12.609Z
             company_id: 123
             access_map:
               sender:
@@ -19744,17 +20336,19 @@ components:
               id: 33955
               contract: employee
             task_group_logs:
-              - inserted_at: '2018-07-18T09:58:59.585Z'
+              - inserted_at: 2018-07-18T09:58:59.585Z
                 id: 26523
                 event: assign_worker
-                description: Task Group assigned to Ms. Jamarcus Jones (+447450913761) by Eldon Cormier
+                description: >-
+                  Task Group assigned to Ms. Jamarcus Jones (+447450913761) by
+                  Eldon Cormier
             state: assigned
             items:
               - width: 1
                 tracking_number: YOJ-NLNPME93PT0
                 tasks:
                   - type: pickup
-                    to: '2018-07-18T17:58:58.565Z'
+                    to: 2018-07-18T17:58:58.565Z
                     task_logs: []
                     task_group_id: 43771
                     state: created
@@ -19764,7 +20358,7 @@ components:
                     lng: 103.7647132
                     lat: 1.4630478
                     id: 67695
-                    from: '2018-07-18T09:58:58.565Z'
+                    from: 2018-07-18T09:58:58.565Z
                     description: Gift
                     contact:
                       phone: 6581551123
@@ -19776,9 +20370,11 @@ components:
                       country: Singapore
                       address2: 160 Robinson Road
                       address: 80 Robinson Road
-                    address: '80 Robinson Road, 160 Robinson Road, Singapore, 112233, Singapore'
+                    address: >-
+                      80 Robinson Road, 160 Robinson Road, Singapore, 112233,
+                      Singapore
                   - type: dropoff
-                    to: '2018-07-19T01:58:58.565Z'
+                    to: 2018-07-19T01:58:58.565Z
                     task_logs: []
                     task_group_id: 43771
                     state: created
@@ -19788,7 +20384,7 @@ components:
                     lng: 103.7647132
                     lat: 1.4630478
                     id: 67696
-                    from: '2018-07-18T17:58:58.565Z'
+                    from: 2018-07-18T17:58:58.565Z
                     description: Gift
                     contact:
                       phone: 6581551123
@@ -19800,7 +20396,9 @@ components:
                       country: Singapore
                       address2: 50 Boon Keng Rd
                       address: Boon Keng Rd
-                    address: 'Boon Keng Rd, 50 Boon Keng Rd, Singapore, 332211, Singapore'
+                    address: >-
+                      Boon Keng Rd, 50 Boon Keng Rd, Singapore, 332211,
+                      Singapore
                 progress_session:
                   - type: assigned
                     status: blank
@@ -19836,13 +20434,13 @@ components:
         sub_task_rule_id: 3
         photos:
           - 'https://s3-ap-southeast-1.amazonaws.com/signature.jpg'
-        completion_time: '2018-03-10T03:37:08.000Z'
+        completion_time: 2018-03-10T03:37:08.000Z
         completion_location:
           lng: 1
           lat: 1
         completion_data:
           recipient_name: recipient
-          arrival_time: '2018-03-10T03:37:08.000Z'
+          arrival_time: 2018-03-10T03:37:08.000Z
     WorkerSubTaskResponse:
       title: Worker SubTask Response
       type: object
@@ -19877,13 +20475,13 @@ components:
           photo_type: Proof
           photo_title: Signature
         event: pickup_completed
-        completion_time: '2018-03-10T03:37:08.000Z'
+        completion_time: 2018-03-10T03:37:08.000Z
         completion_location:
           lng: 1
           lat: 1
         completion_data:
           recipient_name: recipient
-          arrival_time: '2018-03-10T03:37:08.000Z'
+          arrival_time: 2018-03-10T03:37:08.000Z
         action: upload_photo
     SigninRequest:
       title: SigninRequest
@@ -19958,7 +20556,9 @@ components:
         external_id:
           type: string
           description: order external id
-      description: Dispatcher Cancel Order Request - requires order external id or order number
+      description: >-
+        Dispatcher Cancel Order Request - requires order external id or order
+        number
       example:
         order_number: O-WU3UQAYXPCSW
         external_id: '111111000000000'
@@ -20010,7 +20610,9 @@ components:
             contact_company: ''
             city: PETALING JAYA
             address2: '18, JALAN PERSIARAN BARAT, PETALING JAYA'
-            address1: 'W-09-06 AMCORP BUSINESS SUITE, 9TH FLOOR, MENARA MELAWANGI, AMCORP TRADE CENTRE'
+            address1: >-
+              W-09-06 AMCORP BUSINESS SUITE, 9TH FLOOR, MENARA MELAWANGI, AMCORP
+              TRADE CENTRE
     UpdateAddressItemsRequest:
       title: Update Address Item Request
       type: object
@@ -20079,7 +20681,9 @@ components:
             contact_company: ''
             city: PETALING JAYA
             address2: '18, JALAN PERSIARAN BARAT, PETALING JAYA'
-            address1: 'W-09-06 AMCORP BUSINESS SUITE, 9TH FLOOR, MENARA MELAWANGI, AMCORP TRADE CENTRE'
+            address1: >-
+              W-09-06 AMCORP BUSINESS SUITE, 9TH FLOOR, MENARA MELAWANGI, AMCORP
+              TRADE CENTRE
     DeleteAddressItemsResponse:
       title: Address Items Deletion Response
       type: object
@@ -20126,9 +20730,9 @@ components:
                 service_type: sameday
                 order_item_steps:
                   - type: pickup
-                    to_time: '2019-05-07T01:48:14.000Z'
+                    to_time: 2019-05-07T01:48:14.000Z
                     state: created
-                    from_time: '2019-05-06T17:48:14.000Z'
+                    from_time: 2019-05-06T17:48:14.000Z
                     contact_phone: 6581551123
                     contact_name: vivek
                     contact_email: sender@example.com
@@ -20144,9 +20748,9 @@ components:
                       address: 80 Robinson Road
                     address: 80 Robinson Road
                   - type: dropoff
-                    to_time: '2019-05-07T09:48:14.000Z'
+                    to_time: 2019-05-07T09:48:14.000Z
                     state: created
-                    from_time: '2019-05-07T01:48:14.000Z'
+                    from_time: 2019-05-07T01:48:14.000Z
                     contact_phone: 6581551123
                     contact_name: vivek
                     contact_email: recipient@example.com
@@ -20162,12 +20766,16 @@ components:
                       address: Boon Keng Rd
                     address: Boon Keng Rd
                 order_item_logs:
-                  - inserted_at: '2019-05-06T09:48:16.854Z'
+                  - inserted_at: 2019-05-06T09:48:16.854Z
                     event: worker_accepted_item
-                    description: Dropoff at Boon keng rd accepted by Ludwig Graham (+447584471927)
-                  - inserted_at: '2019-05-06T09:48:16.856Z'
+                    description: >-
+                      Dropoff at Boon keng rd accepted by Ludwig Graham
+                      (+447584471927)
+                  - inserted_at: 2019-05-06T09:48:16.856Z
                     event: worker_accepted_item
-                    description: Pickup at 80 robinson road accepted by Ludwig Graham (+447584471927)
+                    description: >-
+                      Pickup at 80 robinson road accepted by Ludwig Graham
+                      (+447584471927)
                 item_id: 53417
                 item:
                   width: 1
@@ -20177,7 +20785,7 @@ components:
                   id: 53417
                   height: 1
             number: bmFvQTA1c3dybS9sNWdnOUVSdEZlZz09
-            inserted_at: '2018-03-20T15:18:38.613Z'
+            inserted_at: 2018-03-20T15:18:38.613Z
             external_id: EXT-21382093
             description: Gift
             container_no: CON-83773878
@@ -20294,7 +20902,7 @@ components:
               assigned: 0
               accepted: 1
             income: '10.00'
-            date: '2018-03-31T00:00:00.000Z'
+            date: 2018-03-31T00:00:00.000Z
     DispatcherWorkerTeamsResponse:
       title: Worker Teams Response
       type: object
@@ -20307,7 +20915,7 @@ components:
         data:
           - name: Changi morning shift 8
             id: 17834
-            created_at: '2018-08-21T23:45:00.000Z'
+            created_at: 2018-08-21T23:45:00.000Z
     DispatcherCreateWorkerTeamRequest:
       title: Worker Team Request
       type: object
@@ -20323,7 +20931,7 @@ components:
       example:
         name: Changi morning shift
         id: 17834
-        created_at: '2018-08-21T23:45:00.000Z'
+        created_at: 2018-08-21T23:45:00.000Z
     WebhookLogsResponse:
       title: Webhooks Response
       type: object
@@ -20338,11 +20946,11 @@ components:
           current_page: 1
         data:
           - webhook_id: 2
-            updated_at: '2018-10-23T07:57:27.538Z'
+            updated_at: 2018-10-23T07:57:27.538Z
             status: succeeded
             retried_count: 1
             response_body: OK
-            inserted_at: '2018-10-23T07:57:27.538Z'
+            inserted_at: 2018-10-23T07:57:27.538Z
             http_status_code: '200'
             event_type: sender.created
             event_id: X2yeIWLZr0qB6L
@@ -20824,7 +21432,7 @@ components:
             price_currency: SGD
             price_amount: 0
             number: Z1QxNVRKUWwvKzUzc00wUkJEeXZUUT09
-            inserted_at: '2021-07-07T03:53:12.604Z'
+            inserted_at: 2021-07-07T03:53:12.604Z
             access_token: 4h/PrR5vu9uVevso3fNv2RPTLQJech3BJ/pNJhWBnfE=
     DispatcherCreateOrderRequest:
       title: '[Dispatcher] Create Order Request'
@@ -20870,22 +21478,22 @@ components:
       description: POST body for dispatcher to create an order
       example:
         steps:
-          - to_time: '2019-09-16T06:00:00.000Z'
+          - to_time: 2019-09-16T06:00:00.000Z
             state: ''
             quantity: 50
             postal_code: ''
             lng: 103.84979090000002
             lat: 1.2804208
-            from_time: '2019-09-16T02:00:00.000Z'
+            from_time: 2019-09-16T02:00:00.000Z
             country: Singapore
             address: '144 Robinson Road, Singapore'
-          - to_time: '2019-09-16T10:00:00.000Z'
+          - to_time: 2019-09-16T10:00:00.000Z
             state: ''
             quantity: 50
             postal_code: 68898
             lng: 103.84920669999997
             lat: 1.2800304
-            from_time: '2019-09-16T06:00:00.000Z'
+            from_time: 2019-09-16T06:00:00.000Z
             country: Singapore
             address: '80 Robinson Road, Singapore'
         sender_type: organisation
@@ -21062,7 +21670,8 @@ components:
         brand_color:
           type: string
       example:
-        logo: 'https://yojee-v2-uploads-dev.s3.amazonaws.com/uploads/companies/1/logo/1_original_mylogo1.png?v=63727525451'
+        logo: >-
+          https://yojee-v2-uploads-dev.s3.amazonaws.com/uploads/companies/1/logo/1_original_mylogo1.png?v=63727525451
         company_slug: yojee
         company_id: 1
         brand_color: '#4a90e2'
@@ -21115,7 +21724,7 @@ components:
         data:
           type: operational
           tag: poly5
-          inserted_at: '2021-07-07T03:53:12.610Z'
+          inserted_at: 2021-07-07T03:53:12.610Z
           description: Sample Region
           coordinates:
             - - lng: 10
@@ -21148,7 +21757,7 @@ components:
       example:
         data:
           name: main
-          inserted_at: '2021-07-07T03:53:12.613Z'
+          inserted_at: 2021-07-07T03:53:12.613Z
           description: Base Freight
           code: BFC
     GetOtpResponse:
@@ -21210,10 +21819,10 @@ components:
       example:
         data:
           - type: pickup
-            to: '2018-03-27T10:00:00.000Z'
+            to: 2018-03-27T10:00:00.000Z
             task_group_id: 4213
             state: created
-            start_time: '2018-03-27T10:00:00.000Z'
+            start_time: 2018-03-27T10:00:00.000Z
             service_type: next_day
             price: SGD 10
             postal_code: '84184'
@@ -21271,12 +21880,12 @@ components:
           - status: paid
             provider_type: stripe
             price: sgd 20
-            period_start: '2020-01-29T08:11:07.000Z'
-            period_end: '2020-01-29T08:11:07.000Z'
-            paid_at: '2020-01-29T08:11:08.000Z'
+            period_start: 2020-01-29T08:11:07.000Z
+            period_end: 2020-01-29T08:11:07.000Z
+            paid_at: 2020-01-29T08:11:08.000Z
             description: 1 Users × Yojee Blitz (at $20.00 / month)
             currency: sgd
-            created_at: '2020-01-29T08:11:07.000Z'
+            created_at: 2020-01-29T08:11:07.000Z
             amount: 20
     DispatcherInfoResponse:
       title: Dispatcher info
@@ -21491,45 +22100,45 @@ components:
       description: Create order Multileg Request
       example:
         steps:
-          - to_time: '2019-04-16T07:29:07.214Z'
+          - to_time: 2019-04-16T07:29:07.214Z
             state: Jurbarko raj.
             postal_code: '71443'
             lng: 25.270641999999953
             lat: 54.7307254
-            from_time: '2019-04-16T07:29:07.214Z'
+            from_time: 2019-04-16T07:29:07.214Z
             country: Lithuania
             contact_phone: 37063930131
             contact_name: Karolis Gudiškis
             contact_email: karolisgud@gmail.com
             address: 'Didlaukio gatvė, Vilnius, Lithuania'
-          - to_time: '2019-04-16T07:30:07.214Z'
+          - to_time: 2019-04-16T07:30:07.214Z
             state: Jurbarko raj.
             postal_code: '71443'
             lng: 25.266571500000055
             lat: 54.7394219
-            from_time: '2019-04-16T07:30:07.214Z'
+            from_time: 2019-04-16T07:30:07.214Z
             country: Lithuania
             contact_phone: 37063930131
             contact_name: Karolis Gudiškis
             contact_email: karolisgud@gmail.com
             address: 'Baltupio gatvė, Vilnius, Lithuania'
-          - to_time: '2019-04-16T07:31:07.214Z'
+          - to_time: 2019-04-16T07:31:07.214Z
             state: Jurbarko raj.
             postal_code: '71443'
             lng: 25.27057339999999
             lat: 55.1966923
-            from_time: '2019-04-16T07:31:07.214Z'
+            from_time: 2019-04-16T07:31:07.214Z
             country: Lithuania
             contact_phone: 37063930131
             contact_name: Karolis Gudiškis
             contact_email: karolisgud@gmail.com
             address: 'Matijošių sodyba, Lithuania'
-          - to_time: '2019-04-16T07:32:07.214Z'
+          - to_time: 2019-04-16T07:32:07.214Z
             state: Jurbarko raj.
             postal_code: '71443'
             lng: 25.27057339999999
             lat: 55.1966923
-            from_time: '2019-04-16T07:32:07.214Z'
+            from_time: 2019-04-16T07:32:07.214Z
             country: Lithuania
             contact_phone: 37063930131
             contact_name: Karolis Gudiškis
@@ -21722,7 +22331,7 @@ components:
           photo_title: Signature
         id: 21
         event: pickup_completed
-        completion_time: '2018-03-10T03:37:08.000Z'
+        completion_time: 2018-03-10T03:37:08.000Z
         company_id: 136
         action: upload_photo
     GetOrderPricesRequest:
@@ -21949,7 +22558,7 @@ components:
           - 'https://s3-ap-southeast-1.amazonaws.com/signature.jpg'
         completion_data:
           recipient_name: recipient
-          arrival_time: '2018-03-10T03:37:08.000Z'
+          arrival_time: 2018-03-10T03:37:08.000Z
     SavedFilterCreateRequest:
       title: Saved Filter Request
       type: object
@@ -22092,12 +22701,12 @@ components:
         id: 1
         data:
           steps:
-            - to_time: '2020-08-18T18:00:00.000Z'
+            - to_time: 2020-08-18T18:00:00.000Z
               state: ''
               postal_code: 68908
               lng: 103.8481704
               lat: 1.2782636
-              from_time: '2020-08-18T17:00:00.000Z'
+              from_time: 2020-08-18T17:00:00.000Z
               country: Singapore
               contact_phone: 65
               address: '144 Robinson Road, Singapore'
@@ -22215,7 +22824,7 @@ components:
           description: Access Map
       description: POST body for updating roles
       example:
-        updated_at: '2021-07-07T03:53:12.610Z'
+        updated_at: 2021-07-07T03:53:12.610Z
         name: role_1
         company_id: 123
         access_map:
@@ -22275,13 +22884,13 @@ components:
           photo_type: Proof
           photo_title: Signature
         event: pickup_completed
-        completion_time: '2018-03-10T03:37:08.000Z'
+        completion_time: 2018-03-10T03:37:08.000Z
         completion_location:
           lng: 1
           lat: 1
         completion_data:
           recipient_name: recipient
-          arrival_time: '2018-03-10T03:37:08.000Z'
+          arrival_time: 2018-03-10T03:37:08.000Z
         action: upload_photo
     DispatcherOrganisationResponse:
       title: Organisation Details
@@ -22395,7 +23004,7 @@ components:
           current_page: 1
         data:
           - type: pickup
-            to: '2018-08-10T21:25:29.621Z'
+            to: 2018-08-10T21:25:29.621Z
             task_group_id: 55612
             state: completed
             service_type: sameday
@@ -22412,7 +23021,7 @@ components:
               height: 1
               global_tracking_number: Y-QVK4PQ
             id: 85945
-            from: '2018-08-10T13:25:29.621Z'
+            from: 2018-08-10T13:25:29.621Z
             external_id: 'External test #1'
             external_customer_id3: external_customer_id3_test
             external_customer_id2: external_customer_id2_test
@@ -22423,5 +23032,5 @@ components:
               phone: 6581551123
               name: vivek
               email: sender@example.com
-            completion_time: '2018-08-10T05:25:30.328Z'
+            completion_time: 2018-08-10T05:25:30.328Z
             address: 80 Robinson Road
