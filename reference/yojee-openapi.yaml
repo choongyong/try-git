@@ -1,17 +1,16 @@
-openapi: 3.0.3
+openapi: 3.1.0
 info:
   title: Yojee APIs
   version: '3.0'
-  description: Yojee's main APIs
   license:
     name: Commercial
     url: 'https://www.yojee.com'
+  description: |
+    Yojee API documentation
 servers:
   - url: 'https://umbrella-dev.yojee.com'
   - url: 'https://umbrella-staging.yojee.com'
 tags:
-  - name: '[Sender] Order'
-    description: Sender Order APIs
   - name: '[Public]'
     description: Public APIs
   - name: '[Public] Docs'
@@ -28,6 +27,8 @@ tags:
     description: Sender APIs
   - name: '[Sender] Batch'
     description: Sender Batch APIs
+  - name: '[Sender] Order'
+    description: Sender Order APIs
   - name: '[Worker]'
     description: Worker APIs
   - name: '[Worker] Task'
@@ -80,6 +81,47 @@ tags:
     description: Broadcast management
   - name: '[Dispatcher] Trip'
     description: Dispatcher APIs for Trip Management
+x-tagGroups:
+  - name: Public
+    tags:
+      - '[Public]'
+      - '[Public] Docs'
+      - '[Public] Order'
+  - name: Dispatcher
+    tags:
+      - '[Dispatcher]'
+      - '[Dispatcher] Company'
+      - '[Dispatcher] Role'
+      - '[Dispatcher] User'
+      - '[Dispatcher] Partner'
+      - '[Dispatcher] Sender'
+      - '[Dispatcher] CorporateSender'
+      - '[Dispatcher] Worker'
+      - '[Dispatcher] WorkerTeam'
+      - '[Dispatcher] Batch'
+      - '[Dispatcher] Order'
+      - '[Dispatcher] OrderItem'
+      - '[Dispatcher] ItemType'
+      - '[Dispatcher] Task'
+      - '[Dispatcher] TaskGroup'
+      - '[Dispatcher] TaskExceptionReason'
+      - '[Dispatcher] SubTask'
+      - '[Dispatcher] SubTaskRule'
+      - '[Dispatcher] Network'
+      - '[Dispatcher] Search'
+      - '[Dispatcher] Broadcast'
+      - '[Dispatcher] Trip'
+  - name: Sender
+    tags:
+      - '[Sender]'
+      - '[Sender] Batch'
+      - '[Sender] Order'
+  - name: Worker
+    tags:
+      - '[Worker]'
+      - '[Worker] Task'
+      - '[Worker] TaskGroup'
+      - '[Worker] SubTask'
 paths:
   '/api/v3/dispatcher/trips/{id}/assign':
     post:
@@ -113,9 +155,6 @@ paths:
             schema:
               $ref: '#/components/schemas/TripAssignRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: tasks
   '/api/v3/dispatcher/partners/{cip}/reject_invite':
     put:
@@ -170,9 +209,6 @@ paths:
           description: sender organisation slug - required for organisational sender
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/tasks:
     get:
       tags:
@@ -469,9 +505,6 @@ paths:
           schema:
             type: integer
             default: 10
-      responses:
-        '200':
-          description: OK
     post:
       tags:
         - '[Dispatcher] Task'
@@ -767,9 +800,6 @@ paths:
           schema:
             type: integer
             default: 10
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/worker_teams/{id}/add_workers':
     post:
       tags:
@@ -803,9 +833,6 @@ paths:
             schema:
               $ref: '#/components/schemas/DispatcherAddWorkersToTeamRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: worker_team
   /api/v3/public/users/info:
     get:
@@ -820,9 +847,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/search/sender:
     get:
       tags:
@@ -862,9 +886,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/public/verify_otp:
     get:
       tags:
@@ -1097,9 +1118,6 @@ paths:
         content:
           '*/*': {}
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: last_read_at
   /api/v3/dispatcher/address_items/upload:
     post:
@@ -1221,9 +1239,6 @@ paths:
           required: true
           schema:
             type: boolean
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/partners/invites/sent:
     get:
       tags:
@@ -1643,9 +1658,6 @@ paths:
             schema:
               $ref: '#/components/schemas/ScheduleRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: schedule
     delete:
       tags:
@@ -1672,9 +1684,6 @@ paths:
           schema:
             type: integer
           example: 1
-      responses:
-        '200':
-          description: OK
     patch:
       tags:
         - '[Dispatcher] Schedule'
@@ -1707,9 +1716,6 @@ paths:
             schema:
               $ref: '#/components/schemas/ScheduleRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: schedule
   '/api/v3/sender/orders/{number}/cancel':
     put:
@@ -1836,9 +1842,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/waybill_templates/{id}':
     get:
       tags:
@@ -1876,7 +1879,7 @@ paths:
       tags:
         - '[Dispatcher] Addressbook'
       summary: 'This endpoint lists address items of a company, supporting search'
-      operationId: ApiWeb.V3.Dispatcher.AddressItemController.index
+      operationId: ApiWeb.V3.Dispatcher.AddressItemController.index.search
       parameters:
         - name: ACCESS_TOKEN
           in: header
@@ -1944,9 +1947,6 @@ paths:
             type: string
             enum:
               - external_id
-      responses:
-        '200':
-          description: OK
   '/api/v3/worker/stops/{id}/tasks':
     get:
       tags:
@@ -2273,9 +2273,6 @@ paths:
           schema:
             type: integer
             default: 10
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/waybill_templates:
     post:
       tags:
@@ -2336,9 +2333,6 @@ paths:
             schema:
               $ref: '#/components/schemas/EtaRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: tasks
   '/api/v3/dispatcher/service_types/{id}':
     put:
@@ -2374,7 +2368,7 @@ paths:
         required: false
       responses:
         '200':
-          description: OK
+          description: Ok
           content: {}
       x-codegen-request-body-name: service_type
     delete:
@@ -2438,7 +2432,7 @@ paths:
         required: false
       responses:
         '200':
-          description: OK
+          description: Ok
           content: {}
       x-codegen-request-body-name: service_type
   /api/v3/dispatcher/operations/apply:
@@ -2543,9 +2537,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/permissions:
     get:
       tags:
@@ -2729,9 +2720,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/public/orders/get_slots:
     get:
       tags:
@@ -2764,7 +2752,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetSlotsResponse'
         '400':
-          description: ERROR
+          description: Error
           content: {}
   '/api/v3/worker/tasks/batches/{id}/status':
     get:
@@ -3167,9 +3155,6 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkActionsRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: actions
   '/api/v3/public/invoices/{order_number}':
     get:
@@ -3194,7 +3179,7 @@ paths:
           description: Create invoice binary for download
           content: {}
         '422':
-          description: ERROR
+          description: Error
           content: {}
   '/api/v3/dispatcher/task_groups/{id}':
     get:
@@ -3221,9 +3206,6 @@ paths:
           required: true
           schema:
             type: integer
-      responses:
-        '200':
-          description: OK
   /api/v3/public/orders/service_types:
     get:
       tags:
@@ -3239,9 +3221,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/order_items:
     get:
       tags:
@@ -3661,10 +3640,10 @@ paths:
             type: string
         - name: id
           in: path
-          description: Order Item id
+          description: id of the OrderItem
           required: true
           schema:
-            type: integer
+            type: string
       responses:
         '200':
           description: OK
@@ -3738,9 +3717,6 @@ paths:
           description: sender organisation slug - required for organisational sender
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/workers/{id}/assign_vehicle':
     put:
       tags:
@@ -3773,9 +3749,6 @@ paths:
             schema:
               $ref: '#/components/schemas/DispatcherAssignVehicleRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: worker
   /api/v3/sender/orders/completed:
     get:
@@ -3846,9 +3819,6 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkTaskCompletionRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: tasks
   '/api/v3/sender/orders/{number}/payments':
     post:
@@ -3920,9 +3890,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/public/orders/item_types:
     get:
       tags:
@@ -4008,9 +3975,6 @@ paths:
           required: true
           schema:
             type: integer
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/item_types/{id}':
     get:
       tags:
@@ -4168,9 +4132,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/task_groups/unassigned:
     get:
       tags:
@@ -4296,15 +4257,15 @@ paths:
             schema:
               $ref: '#/components/schemas/SenderCreateOrderRequest'
             examples:
-              single leg:
+              when thing are ok:
                 value:
                   steps:
-                    - to_time: '2021-07-07T19:53:12.580Z'
+                    - to_time: 2021-07-07T19:53:12.580Z
                       state: SingaporeO
                       postal_code: '112233'
                       lng: 103.7647132
                       lat: 1.4630478
-                      from_time: '2021-07-07T11:53:12.580Z'
+                      from_time: 2021-07-07T11:53:12.580Z
                       country: sg
                       contact_phone: 6581551123
                       contact_name: vivek
@@ -4312,12 +4273,12 @@ paths:
                       contact_company: Adidas
                       address2: 160 Robinson Road
                       address: 80 Robinson Road
-                    - to_time: '2021-07-08T03:53:12.580Z'
+                    - to_time: 2021-07-08T03:53:12.580Z
                       state: Singapore
                       postal_code: '332211'
                       lng: 103.7647132
                       lat: 1.4630478
-                      from_time: '2021-07-07T19:53:12.580Z'
+                      from_time: 2021-07-07T19:53:12.580Z
                       country: Singapore
                       contact_phone: 6581551123
                       contact_name: vivek
@@ -4355,15 +4316,15 @@ paths:
                       item_id: 0
                   external_id: 'External test #1'
                   container_no: 'Container test #1'
-              multi-leg:
+              not ok:
                 value:
                   steps:
-                    - to_time: '2021-07-07T19:53:12.580Z'
+                    - to_time: 2021-07-07T19:53:12.580Z
                       state: Singapore
                       postal_code: '112233'
                       lng: 103.7647132
                       lat: 1.4630478
-                      from_time: '2021-07-07T11:53:12.580Z'
+                      from_time: 2021-07-07T11:53:12.580Z
                       country: sg
                       contact_phone: 6581551123
                       contact_name: vivek
@@ -4371,12 +4332,12 @@ paths:
                       contact_company: Adidas
                       address2: 160 Robinson Road
                       address: 80 Robinson Road
-                    - to_time: '2021-07-08T03:53:12.580Z'
+                    - to_time: 2021-07-08T03:53:12.580Z
                       state: Singapore
                       postal_code: '332211'
                       lng: 103.7647132
                       lat: 1.4630478
-                      from_time: '2021-07-07T19:53:12.580Z'
+                      from_time: 2021-07-07T19:53:12.580Z
                       country: Singapore
                       contact_phone: 6581551123
                       contact_name: vivek
@@ -4384,32 +4345,6 @@ paths:
                       contact_company: Nike
                       address2: 50 Boon Keng Rd
                       address: Boon Keng Rd
-                    - to_time: '2021-07-07T19:53:12.580Z'
-                      state: Singapore
-                      postal_code: '112233'
-                      lng: 103.7647132
-                      lat: 1.4630478
-                      from_time: '2021-07-07T11:53:12.580Z'
-                      country: sg
-                      contact_phone: 6581551123
-                      contact_name: vivek
-                      contact_email: sender@example.com
-                      contact_company: Samsung
-                      address2: 160 Jurong Garden Road
-                      address: 80 Jurong Lake Road
-                    - to_time: '2021-07-08T03:53:12.580Z'
-                      state: Singapore
-                      postal_code: '332211'
-                      lng: 103.7647132
-                      lat: 1.4630478
-                      from_time: '2021-07-07T19:53:12.580Z'
-                      country: Singapore
-                      contact_phone: 6581551123
-                      contact_name: vivek
-                      contact_email: recipient@example.com
-                      contact_company: Sony
-                      address2: 150 East Coast Rd
-                      address: 156 East Garden Rd
                   sender_type: organisation
                   sender_id: 1
                   price_currency: SGD
@@ -4437,12 +4372,6 @@ paths:
                       item_id: 0
                     - type: dropoff
                       order_step_id: 1
-                      item_id: 0
-                    - type: pickup
-                      order_step_id: 2
-                      item_id: 0
-                    - type: dropoff
-                      order_step_id: 3
                       item_id: 0
                   external_id: 'External test #1'
                   container_no: 'Container test #1'
@@ -4586,9 +4515,6 @@ paths:
             schema:
               $ref: '#/components/schemas/TripCreateRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: tasks
   '/api/v3/dispatcher/partners/{id}/mark_active':
     put:
@@ -4876,9 +4802,6 @@ paths:
             schema:
               $ref: '#/components/schemas/QuickAssignRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: tasks
   /api/v3/dispatcher/power/tasks:
     get:
@@ -5139,9 +5062,6 @@ paths:
           schema:
             type: integer
             default: 30
-      responses:
-        '200':
-          description: OK
     post:
       tags:
         - '[Dispatcher] PowerTask'
@@ -5268,14 +5188,6 @@ paths:
             type: array
             items:
               type: integer
-        - name: show_incomplete_info_order_step
-          in: query
-          description: >-
-            show incomplete info order_step - absence means ignore `incomplete
-            info` trait
-          schema:
-            type: boolean
-          example: true / false
         - name: from_completion_time
           in: query
           description: from completion time
@@ -5400,9 +5312,6 @@ paths:
           schema:
             type: integer
             default: 30
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/workers/batches:
     post:
       tags:
@@ -5431,16 +5340,12 @@ paths:
                   type: string
                   description: The file to upload
                   format: binary
-      responses:
-        '200':
-          description: OK
   '/api/v3/public/labels/order_item/{tracking_number}':
     get:
       tags:
         - '[Public] Docs'
       summary: This endpoint generates a Label from a tracking number
-      operationId: >-
-        ApiWeb.V3.Public.LabelController.generate_from_tracking_number.order_items
+      operationId: ApiWeb.V3.Public.LabelController.generate_from_tracking_number
       parameters:
         - name: tracking_number
           in: path
@@ -5458,7 +5363,7 @@ paths:
           description: Label to be downloaded.
           content: {}
         '422':
-          description: ERROR
+          description: Error
           content: {}
   '/api/v3/dispatcher/sub_task_rules/{id}':
     get:
@@ -5873,9 +5778,6 @@ paths:
             schema:
               $ref: '#/components/schemas/SavedFilterUpdateRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: tasks
     delete:
       tags:
@@ -5934,9 +5836,6 @@ paths:
             schema:
               $ref: '#/components/schemas/SavedFilterUpdateRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: tasks
   /api/v3/dispatcher/master_vehicle_types:
     get:
@@ -6006,9 +5905,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/order_items/{id}/hierarchy':
     get:
       tags:
@@ -6055,10 +5951,10 @@ paths:
             type: string
       responses:
         '200':
-          description: OK
+          description: Ok
           content: {}
         '422':
-          description: ERROR
+          description: Error
           content: {}
   '/api/v3/dispatcher/users/{id}':
     put:
@@ -6267,9 +6163,6 @@ paths:
             schema:
               $ref: '#/components/schemas/BulkTaskCompletionRequestByDispatcher'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: tasks
   '/api/v3/enterprise/user/{id}/update':
     put:
@@ -6294,10 +6187,10 @@ paths:
             type: string
         - name: id
           in: path
-          description: id of the User
+          description: id of the user
           required: true
           schema:
-            type: integer
+            type: string
       requestBody:
         description: Enterprise user information
         content:
@@ -6463,9 +6356,6 @@ paths:
             schema:
               $ref: '#/components/schemas/AllocationRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: tasks
   /api/v3/dispatcher/driver_manifest:
     get:
@@ -6493,9 +6383,6 @@ paths:
           description: Worker ID
           schema:
             type: integer
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/network/hubs:
     get:
       tags:
@@ -6578,7 +6465,7 @@ paths:
           description: Pod to be downloaded.
           content: {}
         '422':
-          description: ERROR
+          description: Error
           content: {}
   /api/v3/dispatcher/sub_task_rules:
     get:
@@ -6723,9 +6610,6 @@ paths:
           description: Price's amount
           schema:
             type: number
-      responses:
-        '200':
-          description: OK
   /api/v3/public/jwt/auth_token:
     post:
       tags:
@@ -6831,9 +6715,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/order_items/{order_item_id}/sub_tasks':
     get:
       tags:
@@ -6919,7 +6800,7 @@ paths:
         required: false
       responses:
         '200':
-          description: OK
+          description: Ok
           content: {}
       x-codegen-request-body-name: service_type
   '/api/v3/dispatcher/order_items/{id}/update_multi':
@@ -7161,9 +7042,6 @@ paths:
                   type: string
                   description: The file to upload
                   format: binary
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/trips/{id}/cancel':
     post:
       tags:
@@ -7189,9 +7067,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/organisations/{organisation_id}/senders/{id}':
     put:
       tags:
@@ -7446,9 +7321,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   '/api/v3/public/pods/order_item/{tracking_number}':
     get:
       tags:
@@ -7472,7 +7344,7 @@ paths:
           description: Pod to be downloaded.
           content: {}
         '422':
-          description: ERROR
+          description: Error
           content: {}
   '/api/v3/public/labels/order/{order_number}':
     get:
@@ -7497,7 +7369,7 @@ paths:
           description: Label to be downloaded.
           content: {}
         '422':
-          description: ERROR
+          description: Error
           content: {}
   /api/v3/dispatcher/chat/send_message:
     post:
@@ -7570,9 +7442,6 @@ paths:
           schema:
             type: integer
             default: 10
-      responses:
-        '200':
-          description: OK
   /api/v3/public/orders/company_info:
     get:
       tags:
@@ -7586,9 +7455,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/partner_transfer/sender/create_order:
     post:
       tags:
@@ -8180,9 +8046,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/public/rates/rate_charge_types:
     get:
       tags:
@@ -8260,9 +8123,6 @@ paths:
             schema:
               $ref: '#/components/schemas/RateChargeTypesRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: rate_charge_type
   '/api/v3/worker/stops/{id}':
     get:
@@ -8354,7 +8214,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetPricesResponse'
         '500':
-          description: OK
+          description: Error
           content: {}
       x-codegen-request-body-name: order
   /api/v3/public/orders/validate:
@@ -8374,7 +8234,7 @@ paths:
         required: false
       responses:
         '200':
-          description: OK
+          description: Ok
           content:
             '*/*':
               schema:
@@ -8397,7 +8257,7 @@ paths:
           description: Worker manifest to be downloaded.
           content: {}
         '422':
-          description: ERROR
+          description: Error
           content: {}
   /api/v3/dispatcher/batches/batched:
     post:
@@ -8444,9 +8304,6 @@ paths:
                   type: string
                   description: The list of files to upload (array)
                   format: binary
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/partners/{cip}/send_invite':
     put:
       tags:
@@ -8573,9 +8430,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/orders/{number}':
     get:
       tags:
@@ -8760,9 +8614,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/roles:
     get:
       tags:
@@ -8816,7 +8667,7 @@ paths:
         required: false
       responses:
         '200':
-          description: OK
+          description: Ok
           content: {}
       x-codegen-request-body-name: role
   '/api/v3/dispatcher/batches/{id}/continue':
@@ -8904,9 +8755,6 @@ paths:
                   type: string
                   description: The file to upload
                   format: binary
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/task_groups/assigned:
     get:
       tags:
@@ -9223,9 +9071,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/chat/channel/{channel_id}':
     get:
       tags:
@@ -9256,9 +9101,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/orders/cancel:
     post:
       tags:
@@ -9509,9 +9351,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/jwt/control_tower:
     post:
       tags:
@@ -9615,9 +9454,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
       deprecated: true
   /api/v3/worker/info:
     get:
@@ -9846,9 +9682,6 @@ paths:
           schema:
             type: string
           example: 2018-03-11T03:37:08.000Z
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/dispatchers/senders:
     get:
       tags:
@@ -10029,9 +9862,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/worker_teams:
     get:
       tags:
@@ -10260,9 +10090,6 @@ paths:
           description: Type
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
       deprecated: true
     post:
       tags:
@@ -10290,9 +10117,6 @@ paths:
         content:
           '*/*': {}
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: report_params
   '/api/v3/dispatcher/batches/{id}/cancel':
     put:
@@ -10565,7 +10389,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DispatcherCreateOrderResponse'
         '422':
-          description: ERROR
+          description: Ok
           content: {}
       x-codegen-request-body-name: order
   /api/v3/dispatcher/orders/get_item_count:
@@ -10594,9 +10418,6 @@ paths:
         content:
           '*/*': {}
         required: true
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: order_numbers
   '/api/v3/dispatcher/task_groups/{id}/unassign_worker':
     put:
@@ -10623,9 +10444,6 @@ paths:
           required: true
           schema:
             type: integer
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/saved_filter:
     get:
       tags:
@@ -10686,10 +10504,10 @@ paths:
           example: cGc2RUIwSUZsTGRHQXpzUTJ4WTZ6Zz09
       responses:
         '200':
-          description: OK
+          description: Ok
           content: {}
         '500':
-          description: ERROR
+          description: Error
           content: {}
   '/api/v3/dispatcher/rates/calculate/{rate_entry_id}':
     post:
@@ -11078,9 +10896,6 @@ paths:
             schema:
               $ref: '#/components/schemas/RateChargeTypesRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: rate_charge_type
     delete:
       tags:
@@ -11139,9 +10954,6 @@ paths:
             schema:
               $ref: '#/components/schemas/RateChargeTypesRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: rate_charge_type
   /api/v3/public/otp:
     get:
@@ -11181,15 +10993,12 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/address_items:
     get:
       tags:
         - '[Dispatcher] Addressbook'
       summary: 'This endpoint lists address items of a company, supporting search'
-      operationId: ApiWeb.V3.Dispatcher.AddressItemController.index.2
+      operationId: ApiWeb.V3.Dispatcher.AddressItemController.index
       parameters:
         - name: ACCESS_TOKEN
           in: header
@@ -11257,9 +11066,6 @@ paths:
             type: string
             enum:
               - external_id
-      responses:
-        '200':
-          description: OK
     put:
       tags:
         - '[Dispatcher] Addressbook'
@@ -11397,9 +11203,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/workers/batches/{id}/status':
     get:
       tags:
@@ -11504,9 +11307,6 @@ paths:
           required: true
           schema:
             type: integer
-      responses:
-        '200':
-          description: OK
   '/api/v3/worker/task_groups/{id}/accept':
     put:
       tags:
@@ -11606,9 +11406,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/organisation_senders:
     get:
       tags:
@@ -12253,9 +12050,6 @@ paths:
           schema:
             type: integer
           example: 1
-      responses:
-        '200':
-          description: OK
     patch:
       tags:
         - '[Dispatcher] WorkerTeam'
@@ -12444,7 +12238,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DispatcherCreateOrderResponse'
         '422':
-          description: ERROR
+          description: Error
           content: {}
       x-codegen-request-body-name: order
   /api/v3/dispatcher/chat/channels:
@@ -12466,9 +12260,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/worker/location:
     put:
       tags:
@@ -12704,7 +12495,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/GetOrderPricesResponse'
         '500':
-          description: ERROR
+          description: Error
           content: {}
       x-codegen-request-body-name: order
   '/api/v3/dispatcher/network/regions/{id}':
@@ -12900,9 +12691,6 @@ paths:
             type: array
             items:
               type: object
-      responses:
-        '200':
-          description: OK
     post:
       tags:
         - '[Dispatcher] Schedule'
@@ -12928,9 +12716,6 @@ paths:
             schema:
               $ref: '#/components/schemas/ScheduleRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: schedule
   /api/v3/dispatcher/plans:
     get:
@@ -13215,10 +13000,10 @@ paths:
             type: string
       responses:
         '200':
-          description: OK
+          description: Ok
           content: {}
         '422':
-          description: ERROR
+          description: Error
           content: {}
     post:
       tags:
@@ -13244,10 +13029,10 @@ paths:
             type: string
       responses:
         '200':
-          description: OK
+          description: Ok
           content: {}
         '422':
-          description: ERROR
+          description: Error
           content: {}
     patch:
       tags:
@@ -13267,10 +13052,10 @@ paths:
             type: string
       responses:
         '200':
-          description: OK
+          description: Ok
           content: {}
         '422':
-          description: ERROR
+          description: Error
           content: {}
   /api/v3/worker/tasks/completed:
     get:
@@ -13314,9 +13099,6 @@ paths:
           schema:
             type: integer
             default: 10
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/companies/config:
     get:
       tags:
@@ -13369,9 +13151,6 @@ paths:
           description: Worker ID
           schema:
             type: integer
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/rates/calculate_order/{number}':
     post:
       tags:
@@ -13402,9 +13181,6 @@ paths:
         content:
           '*/*': {}
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: rate_entry_id
   /api/v3/dispatcher/dispatch_rule:
     get:
@@ -13457,9 +13233,6 @@ paths:
             schema:
               $ref: '#/components/schemas/DispatchRuleCreateRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: tasks
   /api/v3/dispatcher/sub_tasks:
     put:
@@ -13637,16 +13410,14 @@ paths:
             schema:
               $ref: '#/components/schemas/SavedFilterCreateRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: saved_filter
   '/api/v3/public/labels/{tracking_number}':
     get:
       tags:
         - '[Public] Docs'
       summary: This endpoint generates a Label from a tracking number
-      operationId: ApiWeb.V3.Public.LabelController.generate_from_tracking_number
+      operationId: >-
+        ApiWeb.V3.Public.LabelController.order_item.generate_from_tracking_number
       parameters:
         - name: tracking_number
           in: path
@@ -13664,7 +13435,7 @@ paths:
           description: Label to be downloaded.
           content: {}
         '422':
-          description: ERROR
+          description: Label generation error.
           content: {}
   '/api/v3/dispatcher/workers/{id}/approve':
     put:
@@ -13731,9 +13502,6 @@ paths:
             schema:
               $ref: '#/components/schemas/DispatcherRemoveWorkersToTeamRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: worker_team
   '/api/v3/dispatcher/task_groups/{id}/assign_worker':
     put:
@@ -13775,9 +13543,6 @@ paths:
           description: Price's amount
           schema:
             type: number
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/trips/{id}/complete':
     post:
       tags:
@@ -13803,9 +13568,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/search/vehicle:
     get:
       tags:
@@ -13845,9 +13607,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/plans/{id}':
     get:
       tags:
@@ -14110,9 +13869,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/order_items/{id}/jobs':
     get:
       tags:
@@ -14174,9 +13930,6 @@ paths:
           description: sender organisation slug - required for organisational sender
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
       deprecated: true
   /api/v3/dispatcher/company/configurations/plugin:
     put:
@@ -14197,15 +13950,6 @@ paths:
           required: true
           schema:
             type: string
-        - name: name
-          in: query
-          description: Plugin name
-          required: true
-          schema:
-            type: string
-      responses:
-        '200':
-          description: OK
   '/api/v3/dispatcher/senders/{id}/order_field_template':
     get:
       tags:
@@ -14364,9 +14108,6 @@ paths:
           required: true
           schema:
             type: string
-      responses:
-        '200':
-          description: OK
   /api/v3/worker/worker_sequence:
     get:
       tags:
@@ -14575,9 +14316,6 @@ paths:
             schema:
               $ref: '#/components/schemas/DispatchRuleCreateRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: tasks
     delete:
       tags:
@@ -14636,9 +14374,6 @@ paths:
             schema:
               $ref: '#/components/schemas/DispatchRuleCreateRequest'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: tasks
   '/api/v3/enterprise/user/{id}/add_to_companies':
     post:
@@ -14697,7 +14432,7 @@ paths:
         required: false
       responses:
         '200':
-          description: OK
+          description: Ok
           content: {}
       x-codegen-request-body-name: options
   /api/v3/dispatcher/company/task_type_mappings:
@@ -14719,13 +14454,6 @@ paths:
           required: true
           schema:
             type: string
-        - name: id
-          in: query
-          description: Task type mapping id
-          required: true
-          schema:
-            type: integer
-          example: 1
       requestBody:
         description: Task type mapping information
         content:
@@ -14798,9 +14526,6 @@ paths:
         content:
           '*/*': {}
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: channel_id
   '/api/v3/dispatcher/track/{number}':
     get:
@@ -14914,7 +14639,7 @@ paths:
         required: false
       responses:
         '200':
-          description: OK
+          description: Ok
           content: {}
       x-codegen-request-body-name: role
     delete:
@@ -14980,7 +14705,7 @@ paths:
         required: false
       responses:
         '200':
-          description: OK
+          description: Ok
           content: {}
       x-codegen-request-body-name: role
   /api/v3/dispatcher/waybill_templates/versions:
@@ -15046,9 +14771,6 @@ paths:
             schema:
               $ref: '#/components/schemas/CompletionLocation'
         required: false
-      responses:
-        '200':
-          description: OK
       x-codegen-request-body-name: location
   '/api/v3/dispatcher/webhooks/{webhook_id}/webhook_logs':
     get:
@@ -15304,9 +15026,6 @@ paths:
           schema:
             type: integer
             default: 10
-      responses:
-        '200':
-          description: OK
   /api/v3/dispatcher/company/configuration:
     get:
       tags:
@@ -15532,6 +15251,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/TasksHistoryResponse'
 components:
+  securitySchemes:
+    Company Slug:
+      name: company_slug
+      type: apiKey
+      in: header
+    Access Token:
+      name: access_token
+      type: apiKey
+      in: header
   schemas:
     TripAssignRequest:
       title: Trip Assign Request
@@ -17959,7 +17687,7 @@ components:
                 type: number
               from_time:
                 type: string
-                format: date
+                minLength: 1
               country:
                 type: string
                 minLength: 1
@@ -23034,3 +22762,6 @@ components:
               email: sender@example.com
             completion_time: 2018-08-10T05:25:30.328Z
             address: 80 Robinson Road
+security:
+  - Company Slug: []
+    Access Token: []
